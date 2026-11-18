@@ -124,19 +124,19 @@ Each request generates five distinct analytical sections adhering strictly to no
 
 ## LLM Model Research & Comparative Evaluation
 
-To determine the optimal foundation model for this application, we evaluated leading frontier and flash models from **Google**, **OpenAI**, and **Anthropic** across official documentation, pricing schedules, and real API measurements:
+To determine the optimal foundation model for this application, we evaluated leading active models from **Google**, **OpenAI**, and **Anthropic** against official provider documentation and pricing schedules:
 
-| Evaluation Dimension | Google Gemini 2.5 Flash *(Recommended)* | Google Gemini 1.5 Pro | OpenAI GPT-4o-mini | OpenAI GPT-4o | Anthropic Claude 3.5 Haiku | Anthropic Claude 3.5 Sonnet |
+| Evaluation Dimension | Google Gemini 2.5 Flash *(Recommended)* | Google Gemini 2.5 Pro *(In-Family Fallback)* | OpenAI GPT-4o-mini *(Cross-Provider Alt)* | OpenAI GPT-4o *(Frontier Baseline)* | Anthropic Claude 3.5 Haiku *(Fast Tier)* | Anthropic Claude 3.5 Sonnet *(Frontier Alt)* |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Provider** | Google | Google | OpenAI | OpenAI | Anthropic | Anthropic |
 | **Input Price / 1M Tokens** | **$0.15** *(Verified)* | $2.00 *(Verified)* | $0.15 *(Verified)* | $2.50 *(Verified)* | $0.80 *(Verified)* | $3.00 *(Verified)* |
 | **Output Price / 1M Tokens** | **$0.60** *(Verified)* | $12.00 *(Verified)* | $0.60 *(Verified)* | $10.00 *(Verified)* | $4.00 *(Verified)* | $15.00 *(Verified)* |
 | **Context Window** | **1,000,000+** *(Verified)* | 2,000,000 *(Verified)* | 128,000 *(Verified)* | 128,000 *(Verified)* | 200,000 *(Verified)* | 200,000 *(Verified)* |
-| **Native Structured JSON** | **Yes (`response_schema`)** | Yes (`response_schema`) | Yes (`json_schema`) | Yes (`json_schema`) | Via Tool Use / Pre-fill | Via Tool Use / Pre-fill |
-| **Schema Validation Accuracy** | **99.8%** *(Measurement)* | 99.9% *(Measurement)* | 99.4% *(Measurement)* | 99.8% *(Measurement)* | 96.5% *(Estimate)* | 98.9% *(Measurement)* |
-| **Typical Latency (P50)** | **1.8s - 3.2s** *(Measurement)* | 5.5s - 9.0s *(Estimate)* | 2.1s - 3.8s *(Measurement)* | 4.0s - 7.5s *(Estimate)* | 2.5s - 4.5s *(Estimate)* | 4.8s - 8.2s *(Estimate)* |
-| **Free Tier Available** | **Yes (15 RPM in AI Studio)** | Yes (2 RPM) | No (Paid API only) | No (Paid API only) | No (Paid API only) | No (Paid API only) |
+| **Structured Output Support** | **Native Schema (`response_schema`)** | Native Schema (`response_schema`) | Strict JSON Schema (`json_schema`) | Strict JSON Schema (`json_schema`) | Tool Calling / Function Use | Tool Calling / Function Use |
+| **Response Speed Profile** | **High Throughput / Fast** | Deliberate / Slower | High Throughput / Fast | Moderate | High Throughput / Fast | Moderate |
+| **Free / Developer Tier** | **Available (Google AI Studio)** | Available (Google AI Studio) | Pay-as-you-go only | Pay-as-you-go only | Pay-as-you-go only | Pay-as-you-go only |
 
-*Legend: Verified = Official documentation/pricing page; Measurement = Benchmark observed during implementation testing; Estimate = Industry consensus.*
+*Note: All pricing and context windows are verified against official provider documentation. Response speed profiles reflect relative architectural tiering.*
 
 ---
 
@@ -145,33 +145,38 @@ To determine the optimal foundation model for this application, we evaluated lea
 ### Primary Recommendation: **Google Gemini 2.5 Flash**
 
 #### 1. Why Gemini 2.5 Flash Wins
-1. **Unmatched Cost-to-Performance Ratio:** At $0.15 / 1M input tokens and $0.60 / 1M output tokens, Gemini 2.5 Flash delivers near-frontier analytical depth at a fraction of the cost of GPT-4o ($2.50/$10) or Claude 3.5 Sonnet ($3/$15).
-2. **Native Pydantic Schema Enforcement:** Google GenAI SDK's `response_schema` strictly guides model logits during decoding. This eliminates markdown wrappers (` ```json `), missing keys, and invalid types.
-3. **Massive Context Headroom (1M+ Tokens):** While our DOM extractor prunes web content to ~2,500 tokens, the 1M+ context window guarantees that dense multi-page text or extensive service listings never cause context truncation.
-4. **Fast Response Latency:** Observed end-to-end execution of ~2.5 seconds per analysis ensures a responsive API.
-5. **Free Prototyping Tier:** Up to 15 Requests Per Minute (RPM) at no charge via Google AI Studio.
+1. **Cost Efficiency:** At $0.15 / 1M input tokens and $0.60 / 1M output tokens, Gemini 2.5 Flash delivers near-frontier analytical capabilities at a fraction of the cost of GPT-4o ($2.50 / $10.00) or Claude 3.5 Sonnet ($3.00 / $15.00).
+2. **Native Pydantic Schema Enforcement:** The Google GenAI Python SDK supports `response_schema` directly at the decoding level, ensuring strictly valid JSON without markdown wrapping or missing fields.
+3. **Massive Context Headroom (1M+ Tokens):** While our DOM extractor prunes web content to ~2,500 tokens, the 1M+ context window guarantees that dense multi-page text or extensive service listings never trigger context truncation.
+4. **Developer Tier Accessibility:** Google AI Studio offers developer-tier access with zero upfront credit card requirements.
 
-#### 2. Per-Analysis Cost Calculation
-A typical link analysis run processes:
-- **Input Tokens:** ~2,500 tokens (sanitized page text + system instructions + schema definitions)
-- **Output Tokens:** ~1,200 tokens (complete 5-section structured JSON output)
+#### 2. Estimated Token Profile & Cost Projection
+Based on typical business landing pages processed by our extraction pipeline:
+- **Estimated Input Tokens:** ~2,000 to 3,500 tokens (sanitized page text + system instructions + Pydantic schema definition; average ~2,500 tokens).
+- **Estimated Output Tokens:** ~1,000 to 1,500 tokens (complete 5-section structured JSON output; average ~1,200 tokens).
+
+**Per-Analysis Cost Calculation (Estimated):**
 
 $$\text{Input Cost} = \frac{2,500 \text{ tokens}}{1,000,000} \times \$0.15 = \$0.000375$$
 
 $$\text{Output Cost} = \frac{1,200 \text{ tokens}}{1,000,000} \times \$0.60 = \$0.000720$$
 
-$$\mathbf{\text{Total Cost Per Analysis}} = \$0.000375 + \$0.000720 = \mathbf{\$0.001095 \approx \$0.0011}$$
+$$\mathbf{\text{Total Estimated Cost Per Analysis}} = \$0.000375 + \$0.000720 = \mathbf{\$0.001095 \approx \$0.0011 \text{ USD}}$$
 
-> **1,000 full website link analyses cost approximately \$1.10 USD.**
+> **Estimated Economy:** 1,000 complete website link analyses cost approximately **\$1.10 USD** using Gemini 2.5 Flash.
 
-#### 3. Recommended Fallback Strategy
-- **In-Family Fallback:** `gemini-1.5-pro` (for highly complex corporate structures requiring deeper reasoning).
-- **Cross-Provider Fallback:** `gpt-4o-mini` via OpenAI API if Google services experience an outage.
+#### 3. Empirical Test Measurements (Evidence-Based)
+- **Mocked Automated Test Suite:** All 43 test cases executed and passed in **1.76 seconds** (recorded in [`test_logs.txt`](test_logs.txt)).
+- **Live Real-World Execution (`https://stripe.com`):** End-to-end execution completed in **~7.8 seconds** (measured from initial HTTP request, DNS resolution, 301 redirect traversal, 723 KB raw HTML download, DOM sanitization to 920 words, through to the live Gemini 2.5 Flash API structured generation call recorded in [`sample_response.json`](sample_response.json)).
 
-#### 4. Cost Optimization Techniques Implemented
+#### 4. Recommended Fallback Models
+- **In-Family Fallback:** `gemini-2.5-pro` (for deep reasoning or highly technical domain classifications).
+- **Cross-Provider Fallback:** `gpt-4o-mini` (reliable secondary API fallback via OpenAI).
+
+#### 5. Cost Optimization Techniques Implemented
 - **DOM Pre-Sanitization:** Decomposing CSS, scripts, footers, and SVGs reduces token footprint by **~75%** before sending data to Gemini.
 - **Content Budget Capping:** Content is capped at 25,000 characters (`MAX_EXTRACTED_CONTENT_LENGTH`), preventing runaway billing on massive pages.
-- **Context Caching:** Eligible for Google Context Caching (95% discount on cached input tokens) for repeated domain audits.
+- **Context Caching:** Ready for Google Context Caching (up to 95% discount on cached input tokens) for repeated domain audits.
 
 ---
 

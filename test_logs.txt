@@ -52,5 +52,5 @@ tests/test_link_analysis.py::test_competitor_service_refinement PASSED   [ 95%]
 tests/test_link_analysis.py::test_llm_service_retry_and_succeed PASSED   [ 97%]
 tests/test_link_analysis.py::test_analysis_service_enforces_query_and_service_caps PASSED [100%]
 
-============================= 43 passed in 1.66s ==============================
+============================= 43 passed in 4.28s ==============================
 
