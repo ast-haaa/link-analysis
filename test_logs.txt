@@ -1,0 +1,56 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\ASTHA\AppData\Local\Programs\Python\Python312\python.exe
+cachedir: .pytest_cache
+rootdir: E:\Majduri\link-analysis\ai-link-analysis
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.16.0, langsmith-0.15.0, asyncio-1.5.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 43 items
+
+tests/test_link_analysis.py::test_health_check_endpoint PASSED           [  2%]
+tests/test_link_analysis.py::test_root_endpoint PASSED                   [  4%]
+tests/test_link_analysis.py::test_link_analysis_success_mocked PASSED    [  6%]
+tests/test_link_analysis.py::test_gemini_missing_api_key_error PASSED    [  9%]
+tests/test_link_analysis.py::test_gemini_rate_limit_handling PASSED      [ 11%]
+tests/test_link_analysis.py::test_gemini_timeout_handling PASSED         [ 13%]
+tests/test_link_analysis.py::test_gemini_malformed_json_response PASSED  [ 16%]
+tests/test_link_analysis.py::test_gemini_api_server_error PASSED         [ 18%]
+tests/test_link_analysis.py::test_missing_request_body PASSED            [ 20%]
+tests/test_link_analysis.py::test_empty_url_string PASSED                [ 23%]
+tests/test_link_analysis.py::test_non_string_url PASSED                  [ 25%]
+tests/test_link_analysis.py::test_disallowed_schemes PASSED              [ 27%]
+tests/test_link_analysis.py::test_url_with_embedded_credentials PASSED   [ 30%]
+tests/test_link_analysis.py::test_url_missing_hostname PASSED            [ 32%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://localhost:8000] PASSED [ 34%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://127.0.0.1:4000] PASSED [ 37%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://127.0.0.2] PASSED [ 39%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://10.0.0.1/admin] PASSED [ 41%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://10.255.255.1] PASSED [ 44%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://172.16.0.1] PASSED [ 46%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://172.31.255.255] PASSED [ 48%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://192.168.0.1] PASSED [ 51%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://192.168.1.254] PASSED [ 53%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://169.254.169.254/latest/meta-data] PASSED [ 55%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://[::1]:8080] PASSED [ 58%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://[::ffff:127.0.0.1]] PASSED [ 60%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://0.0.0.0:80] PASSED [ 62%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://metadata.google.internal] PASSED [ 65%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://intranet] PASSED [ 67%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://router.local] PASSED [ 69%]
+tests/test_link_analysis.py::test_ssrf_prohibited_targets_rejected[http://nas.lan] PASSED [ 72%]
+tests/test_link_analysis.py::test_ssrf_dns_resolution_to_private_ip PASSED [ 74%]
+tests/test_link_analysis.py::test_is_ip_allowed_utility PASSED           [ 76%]
+tests/test_link_analysis.py::test_upstream_timeout_error PASSED          [ 79%]
+tests/test_link_analysis.py::test_upstream_connection_failure PASSED     [ 81%]
+tests/test_link_analysis.py::test_upstream_http_status_error PASSED      [ 83%]
+tests/test_link_analysis.py::test_unsupported_content_type PASSED        [ 86%]
+tests/test_link_analysis.py::test_payload_too_large PASSED               [ 88%]
+tests/test_link_analysis.py::test_html_sanitizer_removes_scripts_and_styles PASSED [ 90%]
+tests/test_link_analysis.py::test_content_length_limiter PASSED          [ 93%]
+tests/test_link_analysis.py::test_competitor_service_refinement PASSED   [ 95%]
+tests/test_link_analysis.py::test_llm_service_retry_and_succeed PASSED   [ 97%]
+tests/test_link_analysis.py::test_analysis_service_enforces_query_and_service_caps PASSED [100%]
+
+============================= 43 passed in 1.66s ==============================
+

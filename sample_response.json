@@ -1,0 +1,981 @@
+{
+  "success": true,
+  "status": "success",
+  "message": "Website content extracted and analyzed successfully.",
+  "website": {
+    "url": "https://stripe.com/in",
+    "title": "Stripe | Financial Infrastructure to Grow Your Revenue",
+    "meta_description": "Stripe is a financial services platform that helps all types of businesses accept payments, build flexible billing models and manage money movement.",
+    "word_count": 920,
+    "character_count": 6950,
+    "raw_html_size_bytes": 723518,
+    "extracted_at": "2026-11-18T08:23:12.295273Z"
+  },
+  "brand": {
+    "brand_name": "Stripe",
+    "business_overview": "Stripe is a financial services platform that provides comprehensive tools and infrastructure for businesses of all sizes to accept payments, build flexible billing models, manage money movement, prevent fraud, and offer financial services globally. It aims to help businesses grow their revenue by providing reliable and scalable financial technology.",
+    "category": "Financial Technology (FinTech)",
+    "products_and_services": [
+      "Payment processing (online and in-person)",
+      "Flexible billing models",
+      "Fraud prevention",
+      "Card issuing programs",
+      "Borderless money movement (stablecoins and crypto)",
+      "Embedded payments for platforms",
+      "Professional services",
+      "Stripe-certified experts",
+      "Support plans",
+      "API and SDK integrations"
+    ]
+  },
+  "analysis": {
+    "competitor_analysis": {
+      "brand_name": "Stripe",
+      "business_overview": "Stripe provides a comprehensive suite of financial infrastructure tools, enabling businesses to accept payments, manage billing, prevent fraud, issue cards, and facilitate global money movement. It caters to both startups and large enterprises, focusing on scalability, developer-friendliness, and revenue growth.",
+      "category": "Financial Technology (FinTech)",
+      "products_and_services": [
+        "Accept and optimise payments globally \u2013 online and in person",
+        "Enable any billing model",
+        "Stop fraud without stopping growth",
+        "Create a card issuing programme",
+        "Access borderless money movement with stablecoins and crypto",
+        "Embed payments in your platform",
+        "Professional services",
+        "Stripe-certified experts",
+        "Support plans"
+      ],
+      "competitors": [
+        {
+          "name": "PayPal / Braintree",
+          "category_or_type": "Direct Competitor",
+          "strengths": [
+            "Strong brand recognition and trust among consumers",
+            "Extensive global reach and user base",
+            "Braintree offers robust developer tools and customizable payment solutions"
+          ],
+          "weaknesses": [
+            "Perceived higher transaction fees for some merchants",
+            "Less emphasis on comprehensive financial infrastructure beyond payments",
+            "Braintree's developer experience might be less streamlined than Stripe's for some use cases"
+          ],
+          "is_inferred": true,
+          "evidence_source": "ai_inferred_industry_standard"
+        },
+        {
+          "name": "Adyen",
+          "category_or_type": "Direct Competitor",
+          "strengths": [
+            "Strong focus on enterprise-level clients and global commerce",
+            "Unified commerce platform for online, mobile, and in-store payments",
+            "Advanced risk management and data analytics capabilities"
+          ],
+          "weaknesses": [
+            "May be less accessible or cost-effective for smaller businesses and startups",
+            "Developer documentation and community support might be less extensive than Stripe's",
+            "Less emphasis on broader financial services like card issuing or crypto payments compared to Stripe's expanding suite"
+          ],
+          "is_inferred": true,
+          "evidence_source": "ai_inferred_industry_standard"
+        },
+        {
+          "name": "Square / Block",
+          "category_or_type": "Direct Competitor",
+          "strengths": [
+            "Strong presence in SMB market, especially for in-person payments and POS systems",
+            "Offers a broader ecosystem of business tools (payroll, banking, loans)",
+            "User-friendly interface for non-technical users"
+          ],
+          "weaknesses": [
+            "Historically more focused on SMBs, less on large enterprises and complex integrations",
+            "Global reach and multi-currency support might be less comprehensive than Stripe's for certain markets",
+            "Developer tools for highly customized financial infrastructure might be less mature than Stripe's"
+          ],
+          "is_inferred": true,
+          "evidence_source": "ai_inferred_industry_standard"
+        }
+      ],
+      "competitive_advantages": [
+        "Comprehensive financial infrastructure covering payments, billing, fraud, card issuing, and crypto.",
+        "Highly developer-friendly APIs, SDKs, and documentation for flexible integrations.",
+        "Strong focus on scalability and reliability, handling high transaction volumes with high uptime.",
+        "Solutions tailored for both startups and large enterprises, demonstrated by diverse customer examples.",
+        "Proactive innovation in areas like stablecoins, AI-powered support, and agentic commerce."
+      ],
+      "positioning_opportunities": [
+        "Emphasize the 'financial infrastructure' aspect as a complete operating system for modern businesses, not just a payment processor.",
+        "Highlight the unique capabilities in emerging areas like stablecoin payments and AI integration for future-proofing businesses.",
+        "Showcase the seamless transition and scalability for businesses from startup phase to enterprise level.",
+        "Position as the go-to platform for global expansion, simplifying complex international payment and regulatory challenges.",
+        "Focus on the 'grow your revenue' promise by detailing how each service directly contributes to business expansion and efficiency."
+      ],
+      "verification_note": "Competitors are AI-inferred based on the business category and offerings, as no direct competitors were cited on the website."
+    },
+    "target_search_queries": {
+      "queries": [
+        {
+          "query": "Stripe payment gateway for e-commerce India",
+          "platforms": [
+            "Google"
+          ],
+          "search_intent": "Commercial",
+          "business_relevance": "Directly targets businesses in India actively seeking a payment solution for their online store, indicating high purchase intent.",
+          "target_audience": "E-commerce business owners, online retailers, startup founders in India"
+        },
+        {
+          "query": "how to accept international payments online",
+          "platforms": [
+            "Google",
+            "Facebook",
+            "Instagram"
+          ],
+          "search_intent": "Informational",
+          "business_relevance": "Addresses a core pain point Stripe solves, attracting businesses looking to expand globally and needing a reliable solution.",
+          "target_audience": "Global e-commerce entrepreneurs, businesses planning international expansion, digital service providers"
+        },
+        {
+          "query": "Stripe API documentation for developers",
+          "platforms": [
+            "Google",
+            "LinkedIn"
+          ],
+          "search_intent": "Navigational",
+          "business_relevance": "Targets technical users (developers) who are likely in the evaluation or implementation phase, indicating high intent to integrate.",
+          "target_audience": "Software developers, CTOs, technical leads, solution architects"
+        },
+        {
+          "query": "best billing software for subscription business",
+          "platforms": [
+            "Google",
+            "LinkedIn"
+          ],
+          "search_intent": "Commercial",
+          "business_relevance": "Captures businesses specifically looking for solutions to manage recurring revenue, a key Stripe offering.",
+          "target_audience": "SaaS founders, subscription service managers, product managers"
+        },
+        {
+          "query": "Stripe card issuing program benefits",
+          "platforms": [
+            "Google",
+            "X"
+          ],
+          "search_intent": "Informational",
+          "business_relevance": "Targets businesses interested in advanced financial services, showcasing Stripe's comprehensive capabilities beyond basic payments.",
+          "target_audience": "Fintech startups, platform businesses, product managers exploring embedded finance"
+        }
+      ],
+      "supported_platforms": [
+        "Google",
+        "Facebook",
+        "Instagram",
+        "LinkedIn",
+        "X"
+      ],
+      "volume_disclaimer": "Search volumes and CPC numbers are not provided as per strict analytical integrity rules."
+    },
+    "seo_improvements": {
+      "keywords": {
+        "primary_keywords": [
+          "financial infrastructure",
+          "payment processing",
+          "online payments",
+          "global payments",
+          "revenue growth"
+        ],
+        "secondary_keywords": [
+          "flexible billing models",
+          "fraud prevention",
+          "card issuing program",
+          "crypto payments",
+          "platform payments",
+          "fintech solutions",
+          "enterprise payments",
+          "startup payments"
+        ],
+        "long_tail_keywords": [
+          "how to accept international payments online",
+          "best payment gateway for e-commerce India",
+          "Stripe API integration guide",
+          "financial services for growing businesses",
+          "stablecoin payment processing for platforms",
+          "build custom revenue models with Stripe"
+        ]
+      },
+      "recommended_seo_title": "Stripe: Financial Infrastructure for Global Revenue Growth",
+      "recommended_meta_description": "Stripe offers comprehensive financial infrastructure for businesses of all sizes. Accept global payments, manage billing, prevent fraud, and grow your revenue with our flexible solutions.",
+      "content_recommendations": [
+        {
+          "title": "The Future of Payments: How AI and Stablecoins are Reshaping Global Commerce",
+          "content_type": "blog_post",
+          "target_keyword": "AI payments, stablecoin payments",
+          "summary_or_outline": "A deep dive into how artificial intelligence and stablecoins are transforming the payment landscape, highlighting Stripe's role in enabling these innovations for businesses."
+        },
+        {
+          "title": "Choosing the Right Payment Gateway: A Guide for Indian Businesses",
+          "content_type": "guide",
+          "target_keyword": "payment gateway India",
+          "summary_or_outline": "A comprehensive guide for businesses in India on selecting an optimal payment gateway, covering features, costs, security, and how Stripe addresses local market needs."
+        },
+        {
+          "title": "Stripe for Enterprise: Unifying Commerce and Scaling Operations Globally",
+          "content_type": "landing_page",
+          "target_keyword": "enterprise financial infrastructure",
+          "summary_or_outline": "A dedicated landing page showcasing Stripe's capabilities for large enterprises, featuring case studies (Hertz, URBN, Instacart) and highlighting solutions for complex integrations and global scale."
+        },
+        {
+          "title": "How to Launch Your Own Card Issuing Program with Stripe Issuing",
+          "content_type": "blog_post",
+          "target_keyword": "card issuing program",
+          "summary_or_outline": "An instructional blog post detailing the steps and benefits of creating a custom card issuing program using Stripe's platform, targeting fintechs and platforms."
+        },
+        {
+          "title": "Maximizing Revenue: Implementing Flexible Billing Models for Modern Businesses",
+          "content_type": "blog_post",
+          "target_keyword": "flexible billing models",
+          "summary_or_outline": "Explores various billing strategies (subscription, usage-based, hybrid) and how businesses can leverage Stripe Billing to implement them for optimized revenue generation and customer retention."
+        }
+      ],
+      "recommended_faqs": [
+        {
+          "question": "What is Stripe and what services does it offer?",
+          "recommended_answer": "Stripe is a financial services platform that provides tools for businesses to accept payments, manage billing, prevent fraud, issue cards, and facilitate global money movement, acting as a comprehensive financial infrastructure."
+        },
+        {
+          "question": "How does Stripe help businesses grow their revenue?",
+          "recommended_answer": "Stripe helps businesses grow revenue by offering flexible payment acceptance, advanced billing models, robust fraud prevention, global expansion capabilities, and tools to build new financial services, all designed to scale with business needs."
+        },
+        {
+          "question": "Is Stripe suitable for both small businesses and large enterprises?",
+          "recommended_answer": "Yes, Stripe provides flexible and scalable solutions tailored for businesses of all sizes, from startups building their foundation to large enterprises like Hertz and Instacart managing billions in revenue."
+        },
+        {
+          "question": "Can I accept international payments with Stripe?",
+          "recommended_answer": "Absolutely. Stripe enables businesses to accept and optimize payments globally, supporting a wide range of currencies and payment methods for online and in-person transactions."
+        },
+        {
+          "question": "What kind of support and integration options does Stripe provide?",
+          "recommended_answer": "Stripe offers professional services, certified experts, tiered support plans, comprehensive APIs, SDKs, and no-code tools, allowing businesses to build custom integrations or use pre-integrated platforms."
+        }
+      ],
+      "rationale": "The recommendations are based on the website's core messaging around 'financial infrastructure to grow your revenue,' its explicit mention of global payments, flexible billing, fraud prevention, card issuing, crypto, and its appeal to both startups and enterprises. Keywords and content ideas directly reflect these offerings and the pain points they solve, while the SEO title and meta description encapsulate the brand's value proposition concisely."
+    },
+    "top_services": {
+      "services": [
+        {
+          "service_name": "Accept and optimise payments globally \u2013 online and in person",
+          "description": "Enables businesses to securely process transactions from customers worldwide, across various channels including online, mobile, and physical point-of-sale, supporting multiple currencies and payment methods.",
+          "target_industry": "E-commerce, Retail, SaaS, Marketplaces, Subscription Services",
+          "target_customer": "Businesses of all sizes, from startups to large enterprises, seeking to expand their customer base and optimize payment conversion rates globally.",
+          "main_benefit": "Increased revenue potential through broader customer reach, reduced payment friction, and optimized global transaction success rates.",
+          "is_inferred": false,
+          "evidence_source": "extracted_from_page"
+        },
+        {
+          "service_name": "Enable any billing model",
+          "description": "Provides a robust platform to implement and manage diverse billing strategies, including subscriptions, usage-based pricing, one-time payments, and hybrid models, with automated invoicing and reconciliation.",
+          "target_industry": "SaaS, Subscription Services, Digital Products, E-commerce, Membership Organizations",
+          "target_customer": "Businesses requiring recurring revenue management, flexible pricing structures, and automated billing workflows.",
+          "main_benefit": "Streamlined revenue operations, reduced manual effort, improved customer retention, and the flexibility to adapt pricing strategies for growth.",
+          "is_inferred": false,
+          "evidence_source": "extracted_from_page"
+        },
+        {
+          "service_name": "Stop fraud without stopping growth",
+          "description": "Utilizes advanced, AI-powered machine learning to detect and prevent fraudulent transactions in real-time, minimizing chargebacks and financial losses while ensuring legitimate customer purchases are processed smoothly.",
+          "target_industry": "E-commerce, Financial Services, Marketplaces, SaaS, Online Gaming",
+          "target_customer": "Businesses concerned about financial losses due to fraud and chargebacks, but also prioritizing a seamless customer experience and uninterrupted sales.",
+          "main_benefit": "Protection against financial losses from fraud, improved customer trust, reduced operational costs associated with disputes, and uninterrupted business growth.",
+          "is_inferred": false,
+          "evidence_source": "extracted_from_page"
+        },
+        {
+          "service_name": "Create a card issuing programme",
+          "description": "Allows businesses to design, issue, and manage their own physical and virtual payment cards, enabling various use cases such as expense management, vendor payouts, customer rewards, or platform-specific spending.",
+          "target_industry": "Fintech, Marketplaces, Gig Economy, Expense Management Platforms, SaaS",
+          "target_customer": "Platforms, startups, and enterprises looking to embed financial services, control money movement, and create new revenue streams through card programs.",
+          "main_benefit": "Enhanced control over financial flows, creation of new revenue opportunities, improved user experience, and streamlined operational efficiency for payouts and expenses.",
+          "is_inferred": false,
+          "evidence_source": "extracted_from_page"
+        },
+        {
+          "service_name": "Embed payments in your platform",
+          "description": "Offers APIs, SDKs, and embedded components that enable software platforms and marketplaces to integrate payment processing directly into their own applications, allowing their users to accept payments seamlessly.",
+          "target_industry": "SaaS, Marketplaces, Vertical SaaS, Software Platforms, Gig Economy Platforms",
+          "target_customer": "Technology companies and platforms that want to offer payment functionality to their end-users, monetize platform transactions, and enhance their core product offering.",
+          "main_benefit": "Monetization of platform transactions, increased user stickiness, a seamless integrated experience for platform users, and reduced operational overhead for payment management.",
+          "is_inferred": false,
+          "evidence_source": "extracted_from_page"
+        }
+      ],
+      "total_identified": 5,
+      "extraction_note": "All services listed were explicitly identified and described on the provided website content."
+    },
+    "target_audience": {
+      "primary_audience": {
+        "segment_name": "E-commerce & SaaS Business Owners/Executives",
+        "tier": "Primary",
+        "customer_profile": "Decision-makers (CEOs, CTOs, CFOs, Product Managers) at growing online businesses, subscription services, and software companies. They are tech-savvy, focused on scalability, global reach, efficient financial operations, and leveraging technology for competitive advantage.",
+        "core_needs_and_pain_points": [
+          "Need reliable, scalable, and secure payment processing for online and global transactions.",
+          "Desire flexible billing models to support diverse revenue streams and customer segments.",
+          "Concerned about fraud and chargebacks impacting profitability and customer trust.",
+          "Seeking to expand into new international markets and require robust multi-currency support.",
+          "Want developer-friendly tools and APIs for seamless integration and customization.",
+          "Aim to reduce operational overhead and automate financial workflows."
+        ]
+      },
+      "secondary_audiences": [
+        {
+          "segment_name": "Developers & Technical Leads",
+          "tier": "Secondary",
+          "customer_profile": "Software engineers, solution architects, and technical leads responsible for integrating payment systems, building financial infrastructure, and maintaining platform stability. They value robust documentation, flexible tools, and reliable performance.",
+          "core_needs_and_pain_points": [
+            "Easy-to-use APIs, comprehensive documentation, and robust SDKs for quick integration.",
+            "Reliable uptime and consistent performance for high transaction volumes.",
+            "Flexibility for custom integrations and complex workflows.",
+            "Access to debugging tools and responsive technical support.",
+            "Ability to innovate with new payment technologies like crypto and AI."
+          ]
+        },
+        {
+          "segment_name": "Enterprise & Large Corporations",
+          "tier": "Secondary",
+          "customer_profile": "Executives and IT managers at large organizations (e.g., Hertz, URBN, Instacart) needing to consolidate complex financial operations, manage high transaction volumes, ensure global regulatory compliance, and integrate with existing systems.",
+          "core_needs_and_pain_points": [
+            "Scalability to handle billions in revenue and thousands of transactions per second.",
+            "Custom integration capabilities for complex enterprise resource planning (ERP) systems.",
+            "Professional services and dedicated support for major migrations and complex implementations.",
+            "Advanced fraud prevention and risk management at scale.",
+            "Global regulatory compliance and localized payment methods.",
+            "Unified commerce solutions for online and in-store revenue."
+          ]
+        },
+        {
+          "segment_name": "Fintech Startups & Platform Businesses",
+          "tier": "Secondary",
+          "customer_profile": "Entrepreneurs and product managers building new financial products or platforms that embed payments, card issuing, or money movement services. They are innovative and seek tools to quickly launch and scale new offerings.",
+          "core_needs_and_pain_points": [
+            "Tools for creating and managing card issuing programs.",
+            "Capabilities for borderless money movement, including stablecoins and crypto.",
+            "Solutions for monetizing platform transactions and managing platform risk.",
+            "Fast time-to-market for new financial services and products.",
+            "Access to a comprehensive suite of financial APIs to build innovative solutions."
+          ]
+        }
+      ],
+      "target_industries": [
+        "E-commerce",
+        "SaaS",
+        "Retail",
+        "Marketplaces",
+        "Fintech",
+        "Gig Economy",
+        "Subscription Services",
+        "Vertical SaaS",
+        "AI/Tech Startups"
+      ],
+      "target_business_types": [
+        "B2B Enterprise",
+        "B2B Mid-Market",
+        "B2B SMB",
+        "D2C (indirectly through e-commerce clients)"
+      ],
+      "geographic_focus": "Global",
+      "marketing_recommendations": [
+        "Develop and promote detailed case studies and success stories highlighting specific revenue growth, efficiency gains, and global expansion achievements for diverse business types (startups, enterprises, e-commerce, SaaS).",
+        "Create a robust developer hub with extensive API documentation, SDK examples, tutorials, and community forums to attract and support technical users.",
+        "Run targeted LinkedIn campaigns for enterprise decision-makers (CFOs, CTOs) focusing on themes like 'unified commerce,' 'scalable financial infrastructure,' and 'global compliance solutions.'",
+        "Produce thought leadership content (blog posts, whitepapers, webinars) on emerging fintech trends, AI in payments, stablecoin adoption, and strategies for global e-commerce expansion.",
+        "Leverage social media platforms (X, LinkedIn) for real-time product updates, industry insights, and engagement with the developer and fintech communities.",
+        "Offer interactive webinars and workshops demonstrating advanced features such as card issuing, platform monetization, and custom billing models to showcase product depth and flexibility."
+      ]
+    }
+  },
+  "url": "https://stripe.com/in",
+  "phase": "Phase 2 - Complete AI-Powered Website Analysis",
+  "data": {
+    "url": "https://stripe.com/in",
+    "title": "Stripe | Financial Infrastructure to Grow Your Revenue",
+    "meta_description": "Stripe is a financial services platform that helps all types of businesses accept payments, build flexible billing models and manage money movement.",
+    "headings": {
+      "h1": [
+        "Financial infrastructure to grow your revenue.Accept payments, offer financial services and implement custom revenue models \u2013 from your first transaction to your billionth."
+      ],
+      "h2": [
+        "Flexible solutions for every business model.",
+        "The backbone of global commerce",
+        "Powering businesses of all sizes.",
+        "Reliable, extensible infrastructure for every stack.",
+        "What's happening"
+      ],
+      "h3": [
+        "Accept and optimise payments globally \u2013 online and in person",
+        "Enable any billing model",
+        "Stop fraud without stopping growth",
+        "Create a card issuing programme",
+        "Access borderless money movement with stablecoins and crypto",
+        "Embed payments in your platform",
+        "Transform your enterprise with agile financial infrastructure",
+        "Hertz unifies commerce with Stripe.",
+        "URBN consolidates $5 billion in online and in-store revenue onto Stripe.",
+        "Instacart powers online grocery delivery with Stripe.",
+        "Le Monde improves local and international payments with Stripe.",
+        "Build a foundation for your startup that enables faster growth",
+        "Make your SaaS platform a complete financial operating system",
+        "Connect to existing systems.",
+        "Scale with confidence.",
+        "Choose an integration path.",
+        "Businesses on Stripe generated US$1.9tn in 2025.",
+        "150k+ users have their best day ever on Stripe.",
+        "Tidemark's vertical and SMB SaaS benchmark report.",
+        "Shopify's Tobi L\u00fctke sits down with John Collison.",
+        "New tools to process payments outside app stores.",
+        "Crypto.com partners with Stripe to enable better crypto payments.",
+        "Make your products shoppable through AI platforms.",
+        "How leading retailers unify customer experiences and drive growth.",
+        "Book of the week"
+      ],
+      "h4": [
+        "Professional services.",
+        "Stripe-certified experts.",
+        "Support plans.",
+        "Lovable grows into a vibe-coding juggernaut with Stripe.",
+        "Gamma expands to US$100m ARR and 70 million users with Stripe.",
+        "Runway protects developer time with no-code solutions from Stripe.",
+        "Supabase delivers its backend-as-a-service to 150 countries with Stripe.",
+        "Linear partners with Stripe to handle billing and payments.",
+        "ElevenLabs grows into a US$3bn AI audio leader with Stripe.",
+        "Browserbase offers usage-based billing for an AI agent browser with Stripe.",
+        "Decagon decreases support costs by 65% with Stripe-integrated agents.",
+        "Stripe Startups programme.",
+        "Stripe Atlas.",
+        "Get to market faster.",
+        "Grow new lines of revenue.",
+        "Manage platform risk.",
+        "500m+",
+        "10k+",
+        "150k+",
+        "Don't code?",
+        "Use a pre-integrated platform.",
+        "Build your own integration.",
+        "See what you'll pay",
+        "Start building"
+      ]
+    },
+    "heading_items": [
+      {
+        "level": "h1",
+        "text": "Financial infrastructure to grow your revenue.Accept payments, offer financial services and implement custom revenue models \u2013 from your first transaction to your billionth."
+      },
+      {
+        "level": "h2",
+        "text": "Flexible solutions for every business model."
+      },
+      {
+        "level": "h3",
+        "text": "Accept and optimise payments globally \u2013 online and in person"
+      },
+      {
+        "level": "h3",
+        "text": "Enable any billing model"
+      },
+      {
+        "level": "h3",
+        "text": "Stop fraud without stopping growth"
+      },
+      {
+        "level": "h3",
+        "text": "Create a card issuing programme"
+      },
+      {
+        "level": "h3",
+        "text": "Access borderless money movement with stablecoins and crypto"
+      },
+      {
+        "level": "h3",
+        "text": "Embed payments in your platform"
+      },
+      {
+        "level": "h2",
+        "text": "The backbone of global commerce"
+      },
+      {
+        "level": "h2",
+        "text": "Powering businesses of all sizes."
+      },
+      {
+        "level": "h3",
+        "text": "Transform your enterprise with agile financial infrastructure"
+      },
+      {
+        "level": "h3",
+        "text": "Hertz unifies commerce with Stripe."
+      },
+      {
+        "level": "h3",
+        "text": "URBN consolidates $5 billion in online and in-store revenue onto Stripe."
+      },
+      {
+        "level": "h3",
+        "text": "Instacart powers online grocery delivery with Stripe."
+      },
+      {
+        "level": "h3",
+        "text": "Le Monde improves local and international payments with Stripe."
+      },
+      {
+        "level": "h4",
+        "text": "Professional services."
+      },
+      {
+        "level": "h4",
+        "text": "Stripe-certified experts."
+      },
+      {
+        "level": "h4",
+        "text": "Support plans."
+      },
+      {
+        "level": "h3",
+        "text": "Build a foundation for your startup that enables faster growth"
+      },
+      {
+        "level": "h4",
+        "text": "Lovable grows into a vibe-coding juggernaut with Stripe."
+      },
+      {
+        "level": "h4",
+        "text": "Gamma expands to US$100m ARR and 70 million users with Stripe."
+      },
+      {
+        "level": "h4",
+        "text": "Runway protects developer time with no-code solutions from Stripe."
+      },
+      {
+        "level": "h4",
+        "text": "Supabase delivers its backend-as-a-service to 150 countries with Stripe."
+      },
+      {
+        "level": "h4",
+        "text": "Linear partners with Stripe to handle billing and payments."
+      },
+      {
+        "level": "h4",
+        "text": "ElevenLabs grows into a US$3bn AI audio leader with Stripe."
+      },
+      {
+        "level": "h4",
+        "text": "Browserbase offers usage-based billing for an AI agent browser with Stripe."
+      },
+      {
+        "level": "h4",
+        "text": "Decagon decreases support costs by 65% with Stripe-integrated agents."
+      },
+      {
+        "level": "h4",
+        "text": "Stripe Startups programme."
+      },
+      {
+        "level": "h4",
+        "text": "Stripe Atlas."
+      },
+      {
+        "level": "h3",
+        "text": "Make your SaaS platform a complete financial operating system"
+      },
+      {
+        "level": "h4",
+        "text": "Get to market faster."
+      },
+      {
+        "level": "h4",
+        "text": "Grow new lines of revenue."
+      },
+      {
+        "level": "h4",
+        "text": "Manage platform risk."
+      },
+      {
+        "level": "h2",
+        "text": "Reliable, extensible infrastructure for every stack."
+      },
+      {
+        "level": "h3",
+        "text": "Connect to existing systems."
+      },
+      {
+        "level": "h3",
+        "text": "Scale with confidence."
+      },
+      {
+        "level": "h4",
+        "text": "500m+"
+      },
+      {
+        "level": "h4",
+        "text": "10k+"
+      },
+      {
+        "level": "h4",
+        "text": "150k+"
+      },
+      {
+        "level": "h3",
+        "text": "Choose an integration path."
+      },
+      {
+        "level": "h4",
+        "text": "Don't code?"
+      },
+      {
+        "level": "h4",
+        "text": "Use a pre-integrated platform."
+      },
+      {
+        "level": "h4",
+        "text": "Build your own integration."
+      },
+      {
+        "level": "h2",
+        "text": "What's happening"
+      },
+      {
+        "level": "h3",
+        "text": "Businesses on Stripe generated US$1.9tn in 2025."
+      },
+      {
+        "level": "h3",
+        "text": "150k+ users have their best day ever on Stripe."
+      },
+      {
+        "level": "h3",
+        "text": "Tidemark's vertical and SMB SaaS benchmark report."
+      },
+      {
+        "level": "h3",
+        "text": "Shopify's Tobi L\u00fctke sits down with John Collison."
+      },
+      {
+        "level": "h3",
+        "text": "New tools to process payments outside app stores."
+      },
+      {
+        "level": "h3",
+        "text": "Crypto.com partners with Stripe to enable better crypto payments."
+      }
+    ],
+    "paragraphs": [
+      "OpenRouter is now part of Stripe. Access, secure and govern your AI workloads across every major model and provider.Learn more",
+      "Grow your business with a comprehensive set of payments and financial tools\u2060 \u2013 designed to work individually or together.",
+      "Grow your business with the most comprehensive set of payments and financial tools.",
+      "currencies and payment methods supported",
+      "in payments volume processed in 2025",
+      "historical uptime for Stripe services",
+      "active subscriptions managed on Stripe Billing",
+      "Run your business on a reliable platform that adapts to your needs.",
+      "Get tailored guidance from Stripe on implementation, complex integrations, or major migrations.",
+      "Work with a Stripe consulting partner that can integrate and deploy Stripe solutions on your behalf.",
+      "Receive ongoing assistance and day-to-day support for technical questions with tiered plans based on your needs.",
+      "Access financial benefits, a focused community, and expert resources to help you grow your business.",
+      "Incorporate and get everything you need to fundraise, bank, and accept payments in two business days.",
+      "Launch and scale payments products with lower operational overhead using embedded components and no-code tools.",
+      "Monetise platform transactions \u2013 including payments, card interchange and financing fees.",
+      "Stay ahead of global regulations with tools for compliance, credit risk, fraud prevention and account security.",
+      "Adapt Stripe to your business needs with flexible integration options.",
+      "Orchestrate payments across multiple processors, build custom workflows, and connect to third parties using APIs, partner apps or pre-built integrations.",
+      "Handle thousands of transactions per second with consistent speed and reliability, even during peak traffic periods.",
+      "With AI-powered support, rich documentation, and built-in debugging tools, you can quickly get started with the best option for your business.",
+      "Set up billing, take in-person payments, or share a payment link \u2013 right from the Stripe Dashboard, no code required.",
+      "Browse our directory of platforms that integrate Stripe with website-building tools.",
+      "Use our SDKs, APIs, MCP server and AI developer tools to build and maintain your own integration with Stripe.",
+      "Our annual letter explores the trends defining the internet economy \u2013 including steeper growth for newer businesses, faster international expansion, stablecoin progress, agentic commerce, and more.",
+      "From Black Friday through Cyber Monday 2025, Stripe processed more than US$40bn for businesses while maintaining a 99.9999% uptime.",
+      "Learn what's driving growth in vertical SaaS in 2025 \u2013 going multiproduct, embedding fintech and integrating AI into the core of their products.",
+      "Hear them discuss the choices that shaped Shopify and Stripe, the future of commerce, and their advice for founders.",
+      "New regulations mean new opportunities. Read how Stripe can help you process payments outside of the iOS and Android app stores, giving you more control and helping grow your revenue.",
+      "Learn how the partnership can help you tap into a new global customer base by letting customers pay with their crypto balance directly at checkout.",
+      "Find out how the Agentic Commerce Protocol (ACP) allows any business to accept purchases from AI platforms without requiring any major technical changes.",
+      "Get insights into how other brands have unified their online and in-store experiences and optimised their checkouts for a seamless shopping experience.",
+      "Entrepreneurship starts with ideas.",
+      "For more ideas on economic progress and technological advancement, see our in-house publications:",
+      "Create an account instantly, or contact us to design a custom package for your business.",
+      "Integrated per-transaction pricing with no hidden fees.",
+      "Get up and running with Stripe in as little as 10 minutes."
+    ],
+    "services": [
+      "Accept and optimise payments globally \u2013 online and in person",
+      "Enable any billing model",
+      "Stop fraud without stopping growth",
+      "Create a card issuing programme",
+      "Access borderless money movement with stablecoins and crypto",
+      "Embed payments in your platform",
+      "Professional services.",
+      "Stripe-certified experts.",
+      "Support plans.",
+      "Get to market faster.",
+      "Grow new lines of revenue.",
+      "Manage platform risk.",
+      "Don't code?",
+      "Use a pre-integrated platform.",
+      "Build your own integration.",
+      "See what you'll pay",
+      "Start building"
+    ],
+    "links": [
+      {
+        "text": "Learn more",
+        "url": "https://openrouter.ai/",
+        "is_internal": false
+      },
+      {
+        "text": "https://stripe.com/in",
+        "url": "https://stripe.com/in",
+        "is_internal": true
+      },
+      {
+        "text": "Pricing",
+        "url": "https://stripe.com/in/pricing",
+        "is_internal": true
+      },
+      {
+        "text": "Sign in",
+        "url": "https://dashboard.stripe.com/login",
+        "is_internal": true
+      },
+      {
+        "text": "See all productsExplore our full product catalogue",
+        "url": "https://stripe.com/in/products",
+        "is_internal": true
+      },
+      {
+        "text": "Start now",
+        "url": "https://dashboard.stripe.com/register",
+        "is_internal": true
+      },
+      {
+        "text": "Contact sales",
+        "url": "https://stripe.com/in/contact/sales",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/newsroom/news/stripe-openai-instant-checkout",
+        "url": "https://stripe.com/in/newsroom/news/stripe-openai-instant-checkout",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/customers/amazon",
+        "url": "https://stripe.com/in/customers/amazon",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/newsroom/news/nvidia-collaboration-with-stripe",
+        "url": "https://stripe.com/in/newsroom/news/nvidia-collaboration-with-stripe",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/newsroom/news/stripe-ford-agreement",
+        "url": "https://stripe.com/in/newsroom/news/stripe-ford-agreement",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/newsroom/news/google-and-stripe",
+        "url": "https://stripe.com/in/newsroom/news/google-and-stripe",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/customers/shopify",
+        "url": "https://stripe.com/in/customers/shopify",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/customers/mindbody",
+        "url": "https://stripe.com/in/customers/mindbody",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/customers/ramp",
+        "url": "https://stripe.com/in/customers/ramp",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/customers/figma",
+        "url": "https://stripe.com/in/customers/figma",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/customers/woo",
+        "url": "https://stripe.com/in/customers/woo",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/customers/vercel",
+        "url": "https://stripe.com/in/customers/vercel",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/newsroom/news/stripe-and-uber",
+        "url": "https://stripe.com/in/newsroom/news/stripe-and-uber",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/customers/anthropic",
+        "url": "https://stripe.com/in/customers/anthropic",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/customers/brightwheel",
+        "url": "https://stripe.com/in/customers/brightwheel",
+        "is_internal": true
+      },
+      {
+        "text": "https://stripe.com/in/customers/cursor",
+        "url": "https://stripe.com/in/customers/cursor",
+        "is_internal": true
+      },
+      {
+        "text": "Watch now",
+        "url": "https://stripe.com/in/sessions/2026?utm_medium=owned-surfaces&utm_source=9cb9&utm_campaign=GLOBAL_4301&utm_content=8a70&utm_term=5a728d3d167c",
+        "is_internal": true
+      },
+      {
+        "text": "historical uptime",
+        "url": "https://status.stripe.com",
+        "is_internal": true
+      },
+      {
+        "text": "Stripe for enterprises",
+        "url": "https://stripe.com/in/enterprise",
+        "is_internal": true
+      },
+      {
+        "text": "Read the story",
+        "url": "https://stripe.com/in/customers/hertz",
+        "is_internal": true
+      },
+      {
+        "text": "Read the story",
+        "url": "https://stripe.com/in/customers/urbn",
+        "is_internal": true
+      },
+      {
+        "text": "Read the story",
+        "url": "https://stripe.com/in/customers/instacart",
+        "is_internal": true
+      },
+      {
+        "text": "Read the story",
+        "url": "https://stripe.com/in/customers/le-monde",
+        "is_internal": true
+      },
+      {
+        "text": "View services",
+        "url": "https://stripe.com/in/professional-services",
+        "is_internal": true
+      },
+      {
+        "text": "View partners",
+        "url": "https://stripe.com/in/partners",
+        "is_internal": true
+      },
+      {
+        "text": "View plans",
+        "url": "https://stripe.com/in/support-plans",
+        "is_internal": true
+      },
+      {
+        "text": "Stripe for startups",
+        "url": "https://stripe.com/in/startups",
+        "is_internal": true
+      },
+      {
+        "text": "Lovable grows into a vibe-coding juggernaut with Stripe.Read Lovable's story",
+        "url": "https://stripe.com/in/customers/lovable",
+        "is_internal": true
+      },
+      {
+        "text": "Gamma expands to US$100m ARR and 70 million users with Stripe.Read Gamma's story",
+        "url": "https://stripe.com/in/customers/gamma",
+        "is_internal": true
+      },
+      {
+        "text": "Runway protects developer time with no-code solutions from Stripe.Read Runway's story",
+        "url": "https://stripe.com/in/customers/runway",
+        "is_internal": true
+      },
+      {
+        "text": "Supabase delivers its backend-as-a-service to 150 countries with Stripe.Read Supabase's story",
+        "url": "https://stripe.com/in/customers/supabase",
+        "is_internal": true
+      },
+      {
+        "text": "Linear partners with Stripe to handle billing and payments.Read Linear's story",
+        "url": "https://stripe.com/in/customers/linear",
+        "is_internal": true
+      },
+      {
+        "text": "ElevenLabs grows into a US$3bn AI audio leader with Stripe.Watch the video",
+        "url": "https://stripe.com/in/customers/elevenlabs",
+        "is_internal": true
+      },
+      {
+        "text": "Browserbase offers usage-based billing for an AI agent browser with Stripe.Read Browserbase's story",
+        "url": "https://stripe.com/in/customers/browserbase",
+        "is_internal": true
+      },
+      {
+        "text": "Decagon decreases support costs by 65% with Stripe-integrated agents.Read Decagon's story",
+        "url": "https://stripe.com/in/customers/decagon",
+        "is_internal": true
+      },
+      {
+        "text": "Stripe Atlas.Incorporate and get everything you need to fundraise, bank, and accept payments in two ",
+        "url": "https://stripe.com/in/atlas",
+        "is_internal": true
+      },
+      {
+        "text": "Stripe for platforms",
+        "url": "https://stripe.com/in/use-cases/platforms",
+        "is_internal": true
+      },
+      {
+        "text": "Read the guide",
+        "url": "https://stripe.com/in/guides/best-practices-for-launching-and-scaling-platform-payments",
+        "is_internal": true
+      },
+      {
+        "text": "Read the guide",
+        "url": "https://stripe.com/in/guides/introduction-to-monetizing-payments",
+        "is_internal": true
+      },
+      {
+        "text": "Read the guide",
+        "url": "https://stripe.com/in/guides/introduction-to-risk-management",
+        "is_internal": true
+      },
+      {
+        "text": "Read the story",
+        "url": "https://stripe.com/in/customers/jobber",
+        "is_internal": true
+      },
+      {
+        "text": "Read the story",
+        "url": "https://stripe.com/in/customers/substack",
+        "is_internal": true
+      },
+      {
+        "text": "Read the story",
+        "url": "https://stripe.com/in/customers/lightspeed-terminal",
+        "is_internal": true
+      },
+      {
+        "text": "View developer docs",
+        "url": "https://docs.stripe.com/development",
+        "is_internal": true
+      }
+    ],
+    "clean_text_summary": "# Website Analysis Data for https://stripe.com/in\n**Title:** Stripe | Financial Infrastructure to Grow Your Revenue\n**Meta Description:** Stripe is a financial services platform that helps all types of businesses accept payments, build flexible billing models and manage money movement.\n\n## Key Headings:\n- [H1] Financial infrastructure to grow your revenue.Accept payments, offer financial services and implement custom revenue models \u2013 from your first transaction to your billionth.\n- [H2] Flexible solutions for every business model.\n- [H3] Accept and optimise payments globally \u2013 online and in person\n- [H3] Enable any billing model\n- [H3] Stop fraud without stopping growth\n- [H3] Create a card issuing programme\n- [H3] Access borderless money movement with stablecoins and crypto\n- [H3] Embed payments in your platform\n- [H2] The backbone of global commerce\n- [H2] Powering businesses of all sizes.\n- [H3] Transform your enterprise with agile financial infrastructure\n- [H3] Hertz unifies commerce with Stripe.\n- [H3] URBN consolidates $5 billion in online and in-store revenue onto Stripe.\n- [H3] Instacart powers online grocery delivery with Stripe.\n- [H3] Le Monde improves local and international payments with Stripe.\n- [H4] Professional services.\n- [H4] Stripe-certified experts.\n- [H4] Support plans.\n- [H3] Build a foundation for your startup that enables faster growth\n- [H4] Lovable grows into a vibe-coding juggernaut with Stripe.\n- [H4] Gamma expands to US$100m ARR and 70 million users with Stripe.\n- [H4] Runway protects developer time with no-code solutions from Stripe.\n- [H4] Supabase delivers its backend-as-a-service to 150 countries with Stripe.\n- [H4] Linear partners with Stripe to handle billing and payments.\n- [H4] ElevenLabs grows into a US$3bn AI audio leader with Stripe.\n\n## Identified Services / Offerings:\n- Accept and optimise payments globally \u2013 online and in person\n- Enable any billing model\n- Stop fraud without stopping growth\n- Create a card issuing programme\n- Access borderless money movement with stablecoins and crypto\n- Embed payments in your platform\n- Professional services.\n- Stripe-certified experts.\n- Support plans.\n- Get to market faster.\n- Grow new lines of revenue.\n- Manage platform risk.\n- Don't code?\n- Use a pre-integrated platform.\n- Build your own integration.\n- See what you'll pay\n- Start building\n\n## Main Content:\nOpenRouter is now part of Stripe. Access, secure and govern your AI workloads across every major model and provider.Learn more\n\nGrow your business with a comprehensive set of payments and financial tools\u2060 \u2013 designed to work individually or together.\n\nGrow your business with the most comprehensive set of payments and financial tools.\n\ncurrencies and payment methods supported\n\nin payments volume processed in 2025\n\nhistorical uptime for Stripe services\n\nactive subscriptions managed on Stripe Billing\n\nRun your business on a reliable platform that adapts to your needs.\n\nGet tailored guidance from Stripe on implementation, complex integrations, or major migrations.\n\nWork with a Stripe consulting partner that can integrate and deploy Stripe solutions on your behalf.\n\nReceive ongoing assistance and day-to-day support for technical questions with tiered plans based on your needs.\n\nAccess financial benefits, a focused community, and expert resources to help you grow your business.\n\nIncorporate and get everything you need to fundraise, bank, and accept payments in two business days.\n\nLaunch and scale payments products with lower operational overhead using embedded components and no-code tools.\n\nMonetise platform transactions \u2013 including payments, card interchange and financing fees.\n\nStay ahead of global regulations with tools for compliance, credit risk, fraud prevention and account security.\n\nAdapt Stripe to your business needs with flexible integration options.\n\nOrchestrate payments across multiple processors, build custom workflows, and connect to third parties using APIs, partner apps or pre-built integrations.\n\nHandle thousands of transactions per second with consistent speed and reliability, even during peak traffic periods.\n\nWith AI-powered support, rich documentation, and built-in debugging tools, you can quickly get started with the best option for your business.\n\nSet up billing, take in-person payments, or share a payment link \u2013 right from the Stripe Dashboard, no code required.\n\nBrowse our directory of platforms that integrate Stripe with website-building tools.\n\nUse our SDKs, APIs, MCP server and AI developer tools to build and maintain your own integration with Stripe.\n\nOur annual letter explores the trends defining the internet economy \u2013 including steeper growth for newer businesses, faster international expansion, stablecoin progress, agentic commerce, and more.\n\nFrom Black Friday through Cyber Monday 2025, Stripe processed more than US$40bn for businesses while maintaining a 99.9999% uptime.\n\nLearn what's driving growth in vertical SaaS in 2025 \u2013 going multiproduct, embedding fintech and integrating AI into the core of their products.\n\nHear them discuss the choices that shaped Shopify and Stripe, the future of commerce, and their advice for founders.\n\nNew regulations mean new opportunities. Read how Stripe can help you process payments outside of the iOS and Android app stores, giving you more control and helping grow your revenue.\n\nLearn how the partnership can help you tap into a new global customer base by letting customers pay with their crypto balance directly at checkout.\n\nFind out how the Agentic Commerce Protocol (ACP) allows any business to accept purchases from AI platforms without requiring any major technical changes.\n\n## Key Navigation & Internal Links:\n- https://stripe.com/in: https://stripe.com/in\n- Pricing: https://stripe.com/in/pricing\n- Sign in: https://dashboard.stripe.com/login\n- See all productsExplore our full product catalogue: https://stripe.com/in/products\n- Start now: https://dashboard.stripe.com/register\n- Contact sales: https://stripe.com/in/contact/sales\n- https://stripe.com/in/newsroom/news/stripe-openai-instant-checkout: https://stripe.com/in/newsroom/news/stripe-openai-instant-checkout\n- https://stripe.com/in/customers/amazon: https://stripe.com/in/customers/amazon\n- https://stripe.com/in/newsroom/news/nvidia-collaboration-with-stripe: https://stripe.com/in/newsroom/news/nvidia-collaboration-with-stripe\n- https://stripe.com/in/newsroom/news/stripe-ford-agreement: https://stripe.com/in/newsroom/news/stripe-ford-agreement\n- https://stripe.com/in/newsroom/news/google-and-stripe: https://stripe.com/in/newsroom/news/google-and-stripe\n- https://stripe.com/in/customers/shopify: https://stripe.com/in/customers/shopify\n- https://stripe.com/in/customers/mindbody: https://stripe.com/in/customers/mindbody\n- https://stripe.com/in/customers/ramp: https://stripe.com/in/customers/ramp\n- https://stripe.com/in/customers/figma: https://stripe.com/in/customers/figma",
+    "word_count": 920,
+    "character_count": 6950,
+    "raw_html_size_bytes": 723518,
+    "extracted_at": "2026-11-18T08:23:12.295273Z"
+  }
+}
