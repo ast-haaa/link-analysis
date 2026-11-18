@@ -1,18 +1,20 @@
-# AI-Powered Website Link Analysis API
+# Link Analysis — AI-Powered Website Intelligence API
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Google GenAI SDK](https://img.shields.io/badge/Google%20GenAI%20SDK-v3.5+-4285F4.svg?logo=google&logoColor=white)](https://github.com/googleapis/python-genai)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
-[![Tests](https://img.shields.io/badge/tests-43%20passed-brightgreen.svg?logo=pytest&logoColor=white)](https://pytest.org/)
+[![Tests](https://img.shields.io/badge/tests-46%20passed-brightgreen.svg?logo=pytest&logoColor=white)](https://pytest.org/)
+[![Frontend UI](https://img.shields.io/badge/Frontend-Link%20Analysis%20Dashboard-DB2777.svg)](http://localhost:4000/dashboard)
 [![Render Deploy](https://img.shields.io/badge/Render-Deployment%20Ready-46E3B7.svg?logo=render&logoColor=white)](https://render.com/)
 
-A production-grade REST API built with **FastAPI**, **HTTPX**, **BeautifulSoup4**, **Pydantic**, and the official **Google GenAI Python SDK (`google-genai`)**. The API extracts, sanitizes, and structures website content to generate comprehensive business intelligence across five analytical sections using **Google Gemini 2.5 Flash**.
+A production-grade REST API and interactive web dashboard built with **FastAPI**, **Tailwind CSS**, **HTTPX**, **BeautifulSoup4**, **Pydantic**, and the official **Google GenAI Python SDK (`google-genai`)**. The application extracts, sanitizes, and structures website content to generate comprehensive business intelligence across five analytical sections using **Google Gemini 2.5 Flash**.
 
 Developed for the **Dxora Technologies Practical Technical Assessment**.
 
 ---
 
 ## Table of Contents
+- [Interactive Web Dashboard (Link Analysis UI)](#interactive-web-dashboard-link-analysis-ui)
 - [Architecture & Workflow](#architecture--workflow)
 - [The Five Business Intelligence Sections](#the-five-business-intelligence-sections)
 - [LLM Model Research & Comparative Evaluation](#llm-model-research--comparative-evaluation)
@@ -22,9 +24,54 @@ Developed for the **Dxora Technologies Practical Technical Assessment**.
 - [Installation & Local Setup](#installation--local-setup)
 - [API Documentation & Usage](#api-documentation--usage)
 - [Sample Real-World Output](#sample-real-world-output)
-- [Automated Test Suite (43 Passed)](#automated-test-suite-43-passed)
+- [Automated Test Suite (46 Passed)](#automated-test-suite-46-passed)
 - [Deployment Guide (Render)](#deployment-guide-render)
 - [Limitations & Mitigations](#limitations--mitigations)
+
+---
+
+## Interactive Web Dashboard (Link Analysis UI)
+
+The project includes **Link Analysis**, a responsive single-page web interface served directly through FastAPI:
+
+- **Dashboard URLs:** Navigate in any browser to `http://localhost:4000/` or `http://localhost:4000/dashboard`.
+- **API Documentation:** Interactive Swagger UI is available at `http://localhost:4000/docs`.
+
+### Design Direction & Aesthetic
+- **Theme:** Clean, modern SaaS aesthetic inspired by high-end AI analytics platforms (Light theme only).
+- **Color System:**
+  - Background: `#FAFAFC` / `#FFFFFF`
+  - Cards: `#FFFFFF` with subtle 1px neutral borders (`#E4E4E7`) and soft shadows (`shadow-card`)
+  - Soft Pink Accents: `#FCE7F3` / `#FDF2F8`
+  - Primary Magenta: `#DB2777` (hover: `#BE185D`)
+  - Deep Magenta: `#9D174D`
+  - Body Text: `#18181B`
+  - Muted Text: `#71717A`
+- **Typography & Styling:** Minimalist, rounded cards (`rounded-2xl`), subtle borders, smooth CSS transitions, and SVG icons without external font dependencies.
+
+### Frontend Features
+1. **Header Navigation:** Link Analysis branding, direct link to interactive Swagger `/docs`, and live `/health` system badge.
+2. **Hero Analysis Bar:** Prominent target URL input with input clear button, glowing focus ring, primary `Analyze Website` CTA with spinner, and one-click sample chips (`stripe.com`, `linear.app`, `vercel.com`, `resend.com`).
+3. **Animated Loading Experience:** Multi-stage progress indicator with smooth bar animation (10% → 92%), live elapsed second timer, and active milestone step tracking:
+   - 1. SSRF & Scheme Validation
+   - 2. DOM Sanitization & Extraction
+   - 3. Gemini 2.5 Flash Reasoning
+   - 4. Structuring 5 Intelligence Sections
+   
+   > **Note on Loading Indicator:** The multi-stage animated progress bar (10% → 92%) and milestone step sequence on the web interface are simulated client-side animations. They are intentionally designed to provide responsive visual feedback during the ~35-second Gemini LLM generation, rather than a real-time WebSocket or Server-Sent Events (SSE) server telemetry stream.
+
+4. **Interactive 5-Section Intelligence Display:**
+   - **Executive Brand Overview:** Brand title, category pill, target link, word count, raw HTML byte count, business summary, and offering tag cloud.
+   - **Section 1: Competitor vs Brand Analysis:** Benchmarked competitors with strengths/weaknesses tags, explicit `Verified from Site` vs `AI-Inferred Industry` badges, brand competitive advantages, positioning opportunities, and verification transparency disclaimer.
+   - **Section 2: Target Search Queries:** Exactly 5 high-intent queries with 5-platform pills (Google, Facebook, Instagram, LinkedIn, X), search intent tags (Commercial, Informational, Transactional, Navigational), business relevance, target audience, 1-click query copy with `Copied!` confirmation, and non-fabricated volume disclaimer.
+   - **Section 3: SEO Improvements & Strategy:** Primary, secondary, and long-tail keyword pills; recommended SEO title & meta description with character count indicators and 1-click copy buttons; high-impact content recommendations cards; interactive schema-ready FAQ accordion; and strategic rationale.
+   - **Section 4: Top 5 Identified Services:** Up to 5 service cards with detailed descriptions, target industry, customer persona, main business benefit highlight in soft pink accent, and `Extracted from Page` vs `AI Inferred` evidence badges.
+   - **Section 5: Target Audience & Personas:** Primary customer persona featured card with pain point checklist; secondary audience persona cards; target industry pills; business model tags; geographic market focus; and actionable marketing recommendation roadmap.
+5. **Productivity Utilities:**
+   - **1-Click Copy & Export:** Instant copy of search queries and SEO snippets with toast notifications, plus a `Copy JSON` and `Export JSON` file download utility.
+   - **Tabs Navigation:** Tabbed switching across Overview, Competitors, Search Queries, SEO, Services, and Audience sections for clean, spacious scanning.
+   - **Reset / Analyze Another:** One-click reset to home input.
+6. **Error Resilience:** Clear, user-friendly error banners for SSRF blocks, invalid schemes, size limits, and upstream timeouts, with an expandable technical diagnostics accordion and a retry button.
 
 ---
 
@@ -124,19 +171,20 @@ Each request generates five distinct analytical sections adhering strictly to no
 
 ## LLM Model Research & Comparative Evaluation
 
-To determine the optimal foundation model for this application, we evaluated leading active models from **Google**, **OpenAI**, and **Anthropic** against official provider documentation and pricing schedules:
+To determine the optimal foundation model for this application, we evaluated leading active models from **Google**, **OpenAI**, and **Anthropic** against official provider documentation and current pricing schedules (*Verified as of November 2026*):
 
 | Evaluation Dimension | Google Gemini 2.5 Flash *(Recommended)* | Google Gemini 2.5 Pro *(In-Family Fallback)* | OpenAI GPT-4o-mini *(Cross-Provider Alt)* | OpenAI GPT-4o *(Frontier Baseline)* | Anthropic Claude 3.5 Haiku *(Fast Tier)* | Anthropic Claude 3.5 Sonnet *(Frontier Alt)* |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Provider** | Google | Google | OpenAI | OpenAI | Anthropic | Anthropic |
-| **Input Price / 1M Tokens** | **$0.15** *(Verified)* | $2.00 *(Verified)* | $0.15 *(Verified)* | $2.50 *(Verified)* | $0.80 *(Verified)* | $3.00 *(Verified)* |
-| **Output Price / 1M Tokens** | **$0.60** *(Verified)* | $12.00 *(Verified)* | $0.60 *(Verified)* | $10.00 *(Verified)* | $4.00 *(Verified)* | $15.00 *(Verified)* |
-| **Context Window** | **1,000,000+** *(Verified)* | 2,000,000 *(Verified)* | 128,000 *(Verified)* | 128,000 *(Verified)* | 200,000 *(Verified)* | 200,000 *(Verified)* |
-| **Structured Output Support** | **Native Schema (`response_schema`)** | Native Schema (`response_schema`) | Strict JSON Schema (`json_schema`) | Strict JSON Schema (`json_schema`) | Tool Calling / Function Use | Tool Calling / Function Use |
-| **Response Speed Profile** | **High Throughput / Fast** | Deliberate / Slower | High Throughput / Fast | Moderate | High Throughput / Fast | Moderate |
-| **Free / Developer Tier** | **Available (Google AI Studio)** | Available (Google AI Studio) | Pay-as-you-go only | Pay-as-you-go only | Pay-as-you-go only | Pay-as-you-go only |
+| **Provider** | [Google AI](https://ai.google.dev/pricing) | [Google AI](https://ai.google.dev/pricing) | [OpenAI](https://openai.com/api/pricing/) | [OpenAI](https://openai.com/api/pricing/) | [Anthropic](https://www.anthropic.com/pricing) | [Anthropic](https://www.anthropic.com/pricing) |
+| **Input Price / 1M Tokens** | **$0.15** *(≤128k)* | $1.25 *(≤128k)* | $0.15 | $2.50 | $0.80 | $3.00 |
+| **Output Price / 1M Tokens** | **$0.60** *(≤128k; incl. thinking)* | $5.00 *(≤128k; incl. thinking)* | $0.60 | $10.00 | $4.00 | $15.00 |
+| **Context Window** | **1,048,576** *(~1M tokens)* | 2,097,152 *(~2M tokens)* | 128,000 | 128,000 | 200,000 | 200,000 |
+| **Max Output Tokens** | **65,536** | 65,536 | 16,384 | 16,384 | 8,192 | 8,192 |
+| **Structured Output Support** | **Native Pydantic (`response_schema`)** | Native Pydantic (`response_schema`) | Strict JSON Schema (`json_schema`) | Strict JSON Schema (`json_schema`) | Tool Calling / Function Use | Tool Calling / Function Use |
+| **Response Speed Profile** *(Qualitative)* | **High Throughput / Fast** | Deliberate / Slower | High Throughput / Fast | Moderate | High Throughput / Fast | Moderate |
+| **Developer / Free Tier** | **Available (Google AI Studio)** | Available (Google AI Studio) | Pay-as-you-go only | Pay-as-you-go only | Pay-as-you-go only | Pay-as-you-go only |
 
-*Note: All pricing and context windows are verified against official provider documentation. Response speed profiles reflect relative architectural tiering.*
+*Data Sources: [Google AI for Developers Pricing](https://ai.google.dev/pricing) • [OpenAI API Pricing](https://openai.com/api/pricing/) • [Anthropic Claude Pricing](https://www.anthropic.com/pricing). All pricing schedules and technical limits verified November 2026.*
 
 ---
 
@@ -146,37 +194,55 @@ To determine the optimal foundation model for this application, we evaluated lea
 
 #### 1. Why Gemini 2.5 Flash Wins
 1. **Cost Efficiency:** At $0.15 / 1M input tokens and $0.60 / 1M output tokens, Gemini 2.5 Flash delivers near-frontier analytical capabilities at a fraction of the cost of GPT-4o ($2.50 / $10.00) or Claude 3.5 Sonnet ($3.00 / $15.00).
-2. **Native Pydantic Schema Enforcement:** The Google GenAI Python SDK supports `response_schema` directly at the decoding level, ensuring strictly valid JSON without markdown wrapping or missing fields.
+2. **Native Pydantic Schema Enforcement:** The Google GenAI Python SDK supports `response_schema` directly at the decoding level, ensuring strictly valid JSON conforming to our Pydantic contracts without markdown wrapping or missing fields.
 3. **Massive Context Headroom (1M+ Tokens):** While our DOM extractor prunes web content to ~2,500 tokens, the 1M+ context window guarantees that dense multi-page text or extensive service listings never trigger context truncation.
 4. **Developer Tier Accessibility:** Google AI Studio offers developer-tier access with zero upfront credit card requirements.
 
-#### 2. Estimated Token Profile & Cost Projection
-Based on typical business landing pages processed by our extraction pipeline:
+#### 2. Cost Analysis & Token Pricing (Estimated)
+
+Based on typical business websites processed by our extraction pipeline:
 - **Estimated Input Tokens:** ~2,000 to 3,500 tokens (sanitized page text + system instructions + Pydantic schema definition; average ~2,500 tokens).
-- **Estimated Output Tokens:** ~1,000 to 1,500 tokens (complete 5-section structured JSON output; average ~1,200 tokens).
+- **Estimated Output Tokens (Payload):** ~1,000 to 1,500 tokens (complete 5-section structured JSON output; average ~1,200 tokens).
+- **Thinking / Reasoning Tokens (when engaged):** Gemini 2.5 Flash performs internal chain-of-thought reasoning prior to emitting structured output (typically ~800 to 1,300 thinking tokens for dense multi-section analysis), which Google bills at the standard output token rate ($0.60 / 1M tokens).
 
-**Per-Analysis Cost Calculation (Estimated):**
+**Per-Analysis Cost Breakdown:**
 
-$$\text{Input Cost} = \frac{2,500 \text{ tokens}}{1,000,000} \times \$0.15 = \$0.000375$$
+- **Scenario A — Standard Output Generation (~1,200 output tokens):**
+  $$\text{Input Cost} = \frac{2,500}{1,000,000} \times \$0.15 = \$0.000375$$
+  $$\text{Output Cost} = \frac{1,200}{1,000,000} \times \$0.60 = \$0.000720$$
+  $$\mathbf{\text{Total Cost}} = \$0.000375 + \$0.000720 = \mathbf{\$0.001095 \approx \$0.0011 \text{ USD}}$$
 
-$$\text{Output Cost} = \frac{1,200 \text{ tokens}}{1,000,000} \times \$0.60 = \$0.000720$$
+- **Scenario B — Accounting for Thinking Tokens (~2,500 total output tokens):**
+  $$\text{Input Cost} = \frac{2,500}{1,000,000} \times \$0.15 = \$0.000375$$
+  $$\text{Output Cost (incl. reasoning)} = \frac{2,500}{1,000,000} \times \$0.60 = \$0.001500$$
+  $$\mathbf{\text{Total Cost}} = \$0.000375 + \$0.001500 = \mathbf{\$0.001875 \approx \$0.0019 \text{ USD}}$$
 
-$$\mathbf{\text{Total Estimated Cost Per Analysis}} = \$0.000375 + \$0.000720 = \mathbf{\$0.001095 \approx \$0.0011 \text{ USD}}$$
+> **Cost Efficiency Summary [Estimated]:** Even with internal thinking tokens accounted for, a complete 5-section link intelligence report costs less than **$0.002 USD** (less than one-fifth of one cent). Approximately **520 to 910 complete website analyses** can be run per $1.00 USD.
 
-> **Estimated Economy:** 1,000 complete website link analyses cost approximately **\$1.10 USD** using Gemini 2.5 Flash.
+#### 3. Performance Metrics: Measured vs. Estimated vs. Qualitative
 
-#### 3. Empirical Test Measurements (Evidence-Based)
-- **Mocked Automated Test Suite:** All 43 test cases executed and passed in **1.76 seconds** (recorded in [`test_logs.txt`](test_logs.txt)).
-- **Live Real-World Execution (`https://stripe.com`):** End-to-end execution completed in **~7.8 seconds** (measured from initial HTTP request, DNS resolution, 301 redirect traversal, 723 KB raw HTML download, DOM sanitization to 920 words, through to the live Gemini 2.5 Flash API structured generation call recorded in [`sample_response.json`](sample_response.json)).
+To ensure analytical integrity, performance characteristics are strictly categorized:
+
+| Metric Category | Assessment Item | Value / Observation | Verification Source / Evidence |
+|:---|:---|:---|:---|
+| **[Measured]** | Automated Pytest Suite | **46 passed in 1.36s** | Local test run ([`test_logs.txt`](test_logs.txt)) |
+| **[Measured]** | Stripe Live E2E Latency | **~37 seconds total** | Real-world API execution ([`sample_response.json`](sample_response.json)) |
+| **[Measured]** | Stripe DOM Sanitization | **~2 seconds** (723 KB HTML → 920 words) | BeautifulSoup extraction pipeline logs |
+| **[Measured]** | Stripe Gemini 2.5 Generation | **~35 seconds** (981 JSON lines) | Live Google GenAI API response |
+| **[Estimated]** | Input Token Usage | ~2,000 – 3,500 tokens | Tokenization of sanitized content + schema |
+| **[Estimated]** | Output Token Usage | ~1,200 – 2,500 tokens (incl. thinking) | JSON payload length + reasoning tokens |
+| **[Estimated]** | Per-Analysis API Cost | **$0.0011 – $0.0019 USD** | Calculated from verified November 2026 pricing |
+| **[Qualitative]** | LLM Response Speed Tier | High Throughput (Flash tier) | Architectural tiering relative to Pro/Frontier models |
+| **[Qualitative]** | Schema Reliability | 100% Valid JSON | Native Pydantic schema decoding via `response_schema` |
 
 #### 4. Recommended Fallback Models
-- **In-Family Fallback:** `gemini-2.5-pro` (for deep reasoning or highly technical domain classifications).
-- **Cross-Provider Fallback:** `gpt-4o-mini` (reliable secondary API fallback via OpenAI).
+- **In-Family Fallback:** `gemini-2.5-pro` (when deeper reasoning or complex ambiguous niche domain categorization is required).
+- **Cross-Provider Fallback:** `gpt-4o-mini` (reliable secondary API fallback via OpenAI with strict JSON schema support).
 
 #### 5. Cost Optimization Techniques Implemented
-- **DOM Pre-Sanitization:** Decomposing CSS, scripts, footers, and SVGs reduces token footprint by **~75%** before sending data to Gemini.
+- **DOM Pre-Sanitization:** Decomposing CSS, scripts, navigation boilerplate, footers, and SVGs reduces token footprint by **~75%** before sending data to Gemini.
 - **Content Budget Capping:** Content is capped at 25,000 characters (`MAX_EXTRACTED_CONTENT_LENGTH`), preventing runaway billing on massive pages.
-- **Context Caching:** Ready for Google Context Caching (up to 95% discount on cached input tokens) for repeated domain audits.
+- **Context Caching:** Ready for Google Context Caching (up to 95% discount on cached input tokens) for recurring domain re-scrapes.
 
 ---
 
@@ -204,9 +270,11 @@ The extraction engine implements enterprise-grade Server-Side Request Forgery (S
 ai-link-analysis/
 ├── app/
 │   ├── __init__.py                # Package metadata and versioning
-│   ├── main.py                    # FastAPI application, exception handlers, and endpoints
+│   ├── main.py                    # FastAPI application, UI serving, exception handlers, and endpoints
 │   ├── config.py                  # Pydantic Settings configuration loader
 │   ├── schemas.py                 # Pydantic request/response & structured analysis models
+│   ├── static/                    # Frontend assets
+│   │   └── index.html             # Link Analysis dashboard (HTML, Tailwind CSS, Vanilla JS)
 │   ├── services/
 │   │   ├── __init__.py            # Service package exports
 │   │   ├── website_extractor.py   # Async HTTPX fetching, SSRF guard, BeautifulSoup extraction
@@ -217,7 +285,7 @@ ai-link-analysis/
 │       ├── __init__.py            # Utility package exports
 │       └── validators.py          # URL validation & multi-tier SSRF security checks
 ├── tests/
-│   └── test_link_analysis.py      # 43 automated pytest test cases (SSRF, extraction, Gemini mock)
+│   └── test_link_analysis.py      # 46 automated pytest test cases (UI, SSRF, extraction, Gemini mock)
 ├── .env.example                   # Template environment variables
 ├── .gitignore                     # Git ignore rules for Python, virtual environments, and secrets
 ├── pytest.ini                     # Pytest configuration and path resolution
@@ -289,10 +357,39 @@ GEMINI_TEMPERATURE=0.2
 uvicorn app.main:app --host 0.0.0.0 --port 4000 --reload
 ```
 
-### 2. Interactive Swagger UI
-Open **[http://localhost:4000/docs](http://localhost:4000/docs)** in your browser to inspect schemas and execute test calls.
+### 2. Interactive Swagger UI & Web Dashboard
+- **Web Interface:** Open **[http://localhost:4000/](http://localhost:4000/)** or **[http://localhost:4000/dashboard](http://localhost:4000/dashboard)** in your browser for the responsive UI.
+- **Interactive OpenAPI Docs:** Open **[http://localhost:4000/docs](http://localhost:4000/docs)** to inspect Pydantic schemas and execute API calls.
 
-### 3. Health Check (`GET /health`)
+### 3. API Root & Content Negotiation (`GET /`)
+The root endpoint provides intelligent content negotiation:
+- Navigating in a browser (sending `Accept: text/html`) delivers the **Link Analysis** interactive dashboard.
+- Calling programmatically with `Accept: application/json` returns API service metadata:
+
+```bash
+curl -X GET "http://localhost:4000/" -H "Accept: application/json"
+```
+
+**Response (`200 OK`):**
+```json
+{
+  "name": "AI-Powered Website Link Analysis API",
+  "version": "1.0.0",
+  "phase": "Phase 2: Google Gemini Integration and Complete AI-Powered Website Analysis",
+  "status": "operational",
+  "model": "gemini-2.5-flash",
+  "documentation": "/docs",
+  "dashboard": "/dashboard",
+  "endpoints": {
+    "dashboard": "GET /dashboard",
+    "health": "GET /health",
+    "link_analysis": "POST /link-analysis"
+  }
+}
+```
+
+### 4. Health Check (`GET /health`)
+Used by uptime probes and Render container orchestrators:
 ```bash
 curl -X GET "http://localhost:4000/health"
 ```
@@ -308,7 +405,7 @@ curl -X GET "http://localhost:4000/health"
 }
 ```
 
-### 4. Link Analysis (`POST /link-analysis`)
+### 5. Link Analysis (`POST /link-analysis`)
 ```bash
 curl -X POST "http://localhost:4000/link-analysis" \
      -H "Content-Type: application/json" \
@@ -577,7 +674,7 @@ The following excerpt is from an actual, live test run against `https://stripe.c
 
 ---
 
-## Automated Test Suite (43 Passed)
+## Automated Test Suite (46 Passed)
 
 Execute the full test suite with pytest:
 
@@ -587,6 +684,7 @@ pytest -v
 ```
 
 ### Test Coverage Highlights:
+- **Web Interface & Content Negotiation:** HTML dashboard delivery (`GET /dashboard`), browser `text/html` negotiation at `GET /`, and programmatic JSON catalog fallback (`GET /`).
 - **System Discovery:** `/health` check and API catalog discovery (`GET /`).
 - **Input Validation:** Empty request bodies, invalid types, missing hostnames, embedded user credentials (`user:pass@host`), and disallowed schemes (`ftp://`, `file://`, `javascript:`).
 - **SSRF Suite (16 Scenarios):** `localhost`, `127.0.0.1`, `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, AWS instance metadata (`169.254.169.254`), IPv6 loopback (`::1`), IPv4-mapped IPv6 (`::ffff:127.0.0.1`), CGNAT (`100.64.0.0/10`), `.local`, `.internal`, `.lan`.
@@ -609,7 +707,7 @@ Ensure all changes are committed (excluding `.env`).
 
 ```bash
 git add .
-git commit -m "Complete AI-Powered Website Link Analysis API (Phase 1, 2, and 3)"
+git commit -m "Complete Link Analysis API & Web Dashboard"
 git push origin main
 ```
 

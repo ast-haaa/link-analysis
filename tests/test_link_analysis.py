@@ -926,3 +926,43 @@ async def test_analysis_service_enforces_query_and_service_caps():
         assert len(result.analysis.target_search_queries.queries) == 5
         assert len(result.analysis.top_services.services) <= 5
         assert result.analysis.top_services.total_identified <= 5
+
+
+# ---------------------------------------------------------------------------
+# 10. Frontend Web Dashboard & Content Negotiation Tests
+# ---------------------------------------------------------------------------
+
+def test_frontend_dashboard_endpoint():
+    """Verify GET /dashboard returns 200 OK with HTML content."""
+    response = client.get("/dashboard")
+    assert response.status_code == 200
+    assert "text/html" in response.headers.get("content-type", "")
+    html = response.text
+    assert "Link Analysis" in html
+    assert "Turn Any Website Into" in html
+    assert "Competitor vs Brand Analysis" in html
+    assert "Target Search Queries" in html
+    assert "SEO Improvements" in html
+    assert "Top 5 Identified Services" in html
+    assert "Target Audience" in html
+
+
+def test_root_content_negotiation_html():
+    """Verify GET / with Accept: text/html serves the frontend HTML dashboard."""
+    response = client.get("/", headers={"Accept": "text/html,application/xhtml+xml"})
+    assert response.status_code == 200
+    assert "text/html" in response.headers.get("content-type", "")
+    assert "Link Analysis" in response.text
+    assert "Actionable Intelligence" in response.text
+
+
+def test_root_content_negotiation_json():
+    """Verify GET / with Accept: application/json returns the API metadata dict."""
+    response = client.get("/", headers={"Accept": "application/json"})
+    assert response.status_code == 200
+    assert "application/json" in response.headers.get("content-type", "")
+    data = response.json()
+    assert "endpoints" in data
+    assert "dashboard" in data["endpoints"]
+    assert "Phase 2" in data["phase"]
+

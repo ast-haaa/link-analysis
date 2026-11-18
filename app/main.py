@@ -5,12 +5,13 @@ AI-Powered Website Link Analysis API - Phase 2: Google Gemini Integration & Busi
 
 from contextlib import asynccontextmanager
 import logging
+from pathlib import Path
 import sys
 
 from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 import uvicorn
 
 from app.config import get_settings
@@ -175,17 +176,51 @@ async def generic_exception_handler(request: Request, exc: Exception):
 
 
 # ---------------------------------------------------------------------------
+# Frontend Static Asset Resolver
+# ---------------------------------------------------------------------------
+
+STATIC_INDEX_PATH = Path(__file__).parent / "static" / "index.html"
+
+
+def get_frontend_html() -> str:
+    """Read and return the single-page application HTML frontend."""
+    if STATIC_INDEX_PATH.is_file():
+        return STATIC_INDEX_PATH.read_text(encoding="utf-8")
+    return (
+        "<!DOCTYPE html><html><head><title>Link Analysis</title></head>"
+        "<body><h1>Link Analysis Dashboard</h1>"
+        "<p>Frontend template not found. Please verify app/static/index.html.</p></body></html>"
+    )
+
+
+# ---------------------------------------------------------------------------
 # API Routes
 # ---------------------------------------------------------------------------
 
 @app.get(
+    "/dashboard",
+    tags=["UI"],
+    summary="Link Analysis Interactive Dashboard",
+    response_class=HTMLResponse,
+)
+async def dashboard():
+    """Serve the interactive web interface."""
+    return HTMLResponse(content=get_frontend_html(), status_code=status.HTTP_200_OK)
+
+
+@app.get(
     "/",
     tags=["Root"],
-    summary="API Root Information",
-    response_model=dict,
+    summary="API Root Information and Web Interface",
 )
-async def root():
-    """Return API metadata, phase status, and documentation endpoints."""
+async def root(request: Request):
+    """Return API metadata or interactive dashboard based on Accept header."""
+    accept = request.headers.get("accept", "")
+    # If a browser requests HTML, serve the interactive web interface
+    if "text/html" in accept and not accept.strip() == "*/*":
+        return HTMLResponse(content=get_frontend_html(), status_code=status.HTTP_200_OK)
+
+    # Return standard API root JSON metadata for automated callers/tests
     return {
         "name": settings.APP_NAME,
         "version": settings.APP_VERSION,
@@ -193,7 +228,9 @@ async def root():
         "status": "operational",
         "model": settings.GEMINI_MODEL,
         "documentation": "/docs",
+        "dashboard": "/dashboard",
         "endpoints": {
+            "dashboard": "GET /dashboard",
             "health": "GET /health",
             "link_analysis": "POST /link-analysis",
         },

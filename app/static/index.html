@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Analysis</title>
+    <meta name="description"
+        content="AI-powered website content extraction, competitor intelligence, multi-platform search query discovery, and SEO strategy generation.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tf: {
+                            bg: '#FAFAFC',
+                            card: '#FFFFFF',
+                            pink: '#FCE7F3',
+                            pinkLight: '#FDF2F8',
+                            magenta: '#DB2777',
+                            magentaHover: '#BE185D',
+                            deepMagenta: '#9D174D',
+                            text: '#18181B',
+                            muted: '#71717A',
+                            border: '#E4E4E7',
+                            borderLight: '#F4F4F5',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 1px 3px 0 rgba(0,0,0,0.04), 0 1px 2px -1px rgba(0,0,0,0.04)',
+                        'card': '0 1px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.03)',
+                        'elevated': '0 4px 16px -4px rgba(0,0,0,0.08), 0 2px 6px -2px rgba(0,0,0,0.04)',
+                        'input': '0 2px 8px -2px rgba(0,0,0,0.06)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #FFFFFF;
+            color: #18181B;
+            font-family: 'Inter', sans-serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #D4D4D8;
+            border-radius: 999px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A1A1AA;
+        }
+
+        /* Soft pink gradient wave backgrounds for landing */
+        .wave-bg::before,
+        .wave-bg::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wave-bg::before {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #FCE7F3 0%, transparent 70%);
+            top: -180px;
+            right: -120px;
+        }
+
+        .wave-bg::after {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #FBCFE8 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+        }
+
+        /* Tab active underline */
+        .tab-btn {
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: #DB2777;
+            font-weight: 600;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -1px;
+            height: 2px;
+            background: #DB2777;
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* Smooth fade for tab panels */
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-full flex flex-col antialiased">
+
+    <!-- ================================================================ -->
+    <!-- NAVBAR -->
+    <!-- ================================================================ -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-zinc-100">
+        <div class="max-w-6xl mx-auto px-5 sm:px-8 h-14 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 group">
+                <div
+                    class="w-8 h-8 rounded-lg bg-gradient-to-br from-tf-deepMagenta to-tf-magenta flex items-center justify-center text-white group-hover:scale-105 transition-transform">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4"
+                            d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <span class="text-[15px] font-bold text-tf-text tracking-tight">Link <span
+                        class="text-tf-magenta">Analysis</span></span>
+            </a>
+            <nav class="flex items-center gap-4 text-[13px] font-medium">
+                <a href="#" id="nav-dashboard"
+                    class="text-zinc-400 hover:text-tf-text transition-colors hidden">Dashboard</a>
+                <a href="/docs" target="_blank" rel="noopener"
+                    class="text-zinc-500 hover:text-tf-magenta transition-colors flex items-center gap-1">
+                    API Docs
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+                <a href="/health" target="_blank" rel="noopener"
+                    class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100 hover:bg-emerald-100 transition-colors">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    System Live
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-1">
+
+        <!-- ================================================================ -->
+        <!-- LANDING PAGE (HERO) — Reference Image 1 -->
+        <!-- ================================================================ -->
+        <section id="landing" class="relative overflow-hidden wave-bg">
+            <div class="relative z-10 max-w-2xl mx-auto px-5 sm:px-8 pt-24 sm:pt-32 pb-28 sm:pb-36 text-center">
+
+                <!-- Gemini Badge -->
+                <div
+                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tf-pinkLight text-tf-deepMagenta text-[11px] font-semibold tracking-wide border border-pink-200/60 mb-6">
+                    <span class="flex h-1.5 w-1.5 relative">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tf-magenta opacity-60"></span>
+                        <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-tf-magenta"></span>
+                    </span>
+                    Powered by Google Gemini 2.5 Flash
+                </div>
+
+                <!-- Headline -->
+                <h1
+                    class="text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold leading-[1.1] tracking-tight text-tf-text mb-5">
+                    Turn Any Website Into<br>
+                    <span class="bg-gradient-to-r from-tf-deepMagenta via-tf-magenta to-pink-400 bg-clip-text text-transparent">Actionable Intelligence</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="text-base sm:text-lg text-zinc-500 leading-relaxed mb-10 max-w-lg mx-auto">
+                    Extract live content, benchmark competitors, discover high-intent search queries, and generate full
+                    SEO & audience strategies in seconds.
+                </p>
+
+                <!-- URL Input Card -->
+                <div class="bg-white rounded-2xl p-2 shadow-elevated border border-zinc-200/70 max-w-xl mx-auto">
+                    <form id="analysis-form" class="flex flex-col sm:flex-row items-stretch gap-1.5">
+                        <div class="relative flex-1 flex items-center">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                </svg>
+                            </div>
+                            <input type="url" id="target-url" name="url" required
+                                placeholder="Enter a website URL (e.g. https://stripe.com)"
+                                class="w-full pl-10 pr-9 py-3 text-sm bg-transparent border-0 text-tf-text placeholder-zinc-400 focus:outline-none focus:ring-0"
+                                autocomplete="off" spellcheck="false">
+                            <button type="button" id="clear-btn"
+                                class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400 hover:text-zinc-600 cursor-pointer"
+                                title="Clear">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <button type="submit" id="submit-btn"
+                            class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-white text-sm bg-tf-magenta hover:bg-tf-magentaHover active:scale-[0.97] transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer whitespace-nowrap">
+                            <span id="btn-text">Analyze Website</span>
+                            <svg id="btn-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                            <svg id="btn-spinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4" />
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Sample Chips -->
+                <div class="mt-5 flex flex-wrap items-center justify-center gap-2 text-[12px] text-zinc-400">
+                    <span class="font-medium">Try:</span>
+                    <button type="button"
+                        class="sample-chip px-2.5 py-1 rounded-lg bg-white border border-zinc-200 hover:border-pink-300 hover:text-tf-deepMagenta hover:bg-tf-pinkLight transition-colors font-mono cursor-pointer"
+                        data-url="https://stripe.com">stripe.com</button>
+                    <button type="button"
+                        class="sample-chip px-2.5 py-1 rounded-lg bg-white border border-zinc-200 hover:border-pink-300 hover:text-tf-deepMagenta hover:bg-tf-pinkLight transition-colors font-mono cursor-pointer"
+                        data-url="https://linear.app">linear.app</button>
+                    <button type="button"
+                        class="sample-chip px-2.5 py-1 rounded-lg bg-white border border-zinc-200 hover:border-pink-300 hover:text-tf-deepMagenta hover:bg-tf-pinkLight transition-colors font-mono cursor-pointer"
+                        data-url="https://vercel.com">vercel.com</button>
+                    <button type="button"
+                        class="sample-chip px-2.5 py-1 rounded-lg bg-white border border-zinc-200 hover:border-pink-300 hover:text-tf-deepMagenta hover:bg-tf-pinkLight transition-colors font-mono cursor-pointer"
+                        data-url="https://resend.com">resend.com</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- LOADING STATE -->
+        <!-- ================================================================ -->
+        <section id="loading-state" class="hidden max-w-xl mx-auto px-5 sm:px-8 py-16">
+            <div class="bg-white rounded-2xl p-8 shadow-card border border-zinc-100 text-center">
+                <div class="relative w-14 h-14 mx-auto mb-5">
+                    <div
+                        class="absolute inset-0 rounded-full border-[3px] border-zinc-100 border-t-tf-magenta animate-spin">
+                    </div>
+                    <div class="absolute inset-2 rounded-full bg-tf-pinkLight flex items-center justify-center">
+                        <svg class="w-4 h-4 text-tf-magenta animate-pulse" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                </div>
+                <h3 id="loading-step-title" class="text-base font-bold text-tf-text mb-1">Analyzing Website...</h3>
+                <p id="loading-step-desc" class="text-sm text-zinc-500 mb-6">Connecting to target host and enforcing
+                    SSRF defenses...</p>
+                <div class="w-full bg-zinc-100 rounded-full h-1.5 mb-5 overflow-hidden">
+                    <div id="progress-bar-fill"
+                        class="h-full bg-gradient-to-r from-tf-deepMagenta to-tf-magenta rounded-full transition-all duration-700 ease-out"
+                        style="width:12%"></div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-left text-[11px]">
+                    <div id="step-1"
+                        class="flex items-center gap-2 p-2 rounded-lg bg-tf-pinkLight text-tf-deepMagenta font-medium">
+                        <span class="step-dot w-1.5 h-1.5 rounded-full bg-tf-magenta animate-pulse"></span>
+                        <span>1. SSRF & URL Validation</span>
+                    </div>
+                    <div id="step-2" class="flex items-center gap-2 p-2 rounded-lg bg-zinc-50 text-zinc-500">
+                        <span class="step-dot w-1.5 h-1.5 rounded-full bg-zinc-300"></span>
+                        <span>2. DOM Extraction</span>
+                    </div>
+                    <div id="step-3" class="flex items-center gap-2 p-2 rounded-lg bg-zinc-50 text-zinc-500">
+                        <span class="step-dot w-1.5 h-1.5 rounded-full bg-zinc-300"></span>
+                        <span>3. Gemini Flash Analysis</span>
+                    </div>
+                    <div id="step-4" class="flex items-center gap-2 p-2 rounded-lg bg-zinc-50 text-zinc-500">
+                        <span class="step-dot w-1.5 h-1.5 rounded-full bg-zinc-300"></span>
+                        <span>4. Intelligence Report</span>
+                    </div>
+                </div>
+                <div class="mt-4 text-[11px] text-zinc-400 font-mono flex items-center justify-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Elapsed: <span id="elapsed-timer">0.0s</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- ERROR STATE -->
+        <!-- ================================================================ -->
+        <section id="error-state" class="hidden max-w-xl mx-auto px-5 sm:px-8 py-10">
+            <div class="bg-white rounded-2xl p-6 shadow-card border border-red-100">
+                <div class="flex items-start gap-3">
+                    <div
+                        class="w-9 h-9 rounded-lg bg-red-50 flex-shrink-0 flex items-center justify-center text-red-500">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 mb-1">
+                            <h3 id="error-title" class="text-sm font-bold text-tf-text">Analysis Failed</h3>
+                            <span id="error-badge"
+                                class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-red-50 text-red-700 font-semibold">ERROR</span>
+                        </div>
+                        <p id="error-message" class="text-sm text-zinc-500 mb-3">An error occurred.</p>
+                        <div id="error-details-container" class="hidden mb-3">
+                            <details
+                                class="text-[11px] bg-zinc-50 border border-zinc-200 rounded-lg p-2 font-mono text-zinc-600">
+                                <summary class="cursor-pointer font-semibold text-zinc-700">Technical details</summary>
+                                <pre id="error-details-content"
+                                    class="mt-1.5 whitespace-pre-wrap overflow-x-auto text-[10px]"></pre>
+                            </details>
+                        </div>
+                        <button type="button" id="error-reset-btn"
+                            class="text-xs font-semibold text-tf-magenta hover:text-tf-magentaHover transition-colors cursor-pointer">←
+                            Try another website</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================================================================ -->
+        <!-- RESULTS DASHBOARD — Reference Image 2 (Premium, Tab-Based) -->
+        <!-- ================================================================ -->
+        <section id="results-section" class="hidden bg-tf-bg min-h-screen">
+            <div class="max-w-6xl mx-auto px-5 sm:px-8 py-8">
+
+                <!-- Dashboard Header -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <h2 class="text-xl font-bold text-tf-text">Analysis Results</h2>
+                            <span class="text-zinc-300">—</span>
+                            <span id="res-brand-title" class="text-xl font-bold text-tf-magenta">Brand</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-3 text-[12px] text-zinc-500">
+                            <a id="res-target-url" href="#" target="_blank" rel="noopener"
+                                class="text-tf-magenta hover:underline font-mono truncate max-w-xs">
+                                <span id="res-url-text">https://example.com</span>
+                            </a>
+                            <span class="text-zinc-300">•</span>
+                            <span id="res-word-count">0 words</span>
+                            <span class="text-zinc-300">•</span>
+                            <span id="res-html-size">0 KB</span>
+                            <span class="text-zinc-300">•</span>
+                            <span id="res-category-badge"
+                                class="px-2 py-0.5 rounded-full bg-tf-pinkLight text-tf-deepMagenta text-[11px] font-semibold border border-pink-200/50">Category</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button type="button" id="copy-json-btn"
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium bg-white border border-zinc-200 hover:border-tf-magenta hover:text-tf-magenta text-zinc-600 transition-colors cursor-pointer">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                            </svg>
+                            Copy JSON
+                        </button>
+                        <button type="button" id="export-json-btn"
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-medium bg-white border border-zinc-200 hover:border-tf-magenta hover:text-tf-magenta text-zinc-600 transition-colors cursor-pointer">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            Export
+                        </button>
+                        <button type="button" id="reset-analysis-btn"
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-semibold bg-tf-magenta text-white hover:bg-tf-magentaHover transition-colors cursor-pointer">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            New Analysis
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tabs Navigation -->
+                <div class="border-b border-zinc-200 mb-6 -mx-1">
+                    <nav class="flex gap-0 overflow-x-auto px-1" aria-label="Analysis Sections">
+                        <button type="button"
+                            class="tab-btn active px-4 py-2.5 text-[13px] font-medium text-zinc-500 hover:text-tf-magenta transition-colors whitespace-nowrap cursor-pointer"
+                            data-tab="overview">Overview</button>
+                        <button type="button"
+                            class="tab-btn px-4 py-2.5 text-[13px] font-medium text-zinc-500 hover:text-tf-magenta transition-colors whitespace-nowrap cursor-pointer"
+                            data-tab="competitors">Competitors</button>
+                        <button type="button"
+                            class="tab-btn px-4 py-2.5 text-[13px] font-medium text-zinc-500 hover:text-tf-magenta transition-colors whitespace-nowrap cursor-pointer"
+                            data-tab="queries">Search Queries</button>
+                        <button type="button"
+                            class="tab-btn px-4 py-2.5 text-[13px] font-medium text-zinc-500 hover:text-tf-magenta transition-colors whitespace-nowrap cursor-pointer"
+                            data-tab="seo">SEO</button>
+                        <button type="button"
+                            class="tab-btn px-4 py-2.5 text-[13px] font-medium text-zinc-500 hover:text-tf-magenta transition-colors whitespace-nowrap cursor-pointer"
+                            data-tab="services">Services</button>
+                        <button type="button"
+                            class="tab-btn px-4 py-2.5 text-[13px] font-medium text-zinc-500 hover:text-tf-magenta transition-colors whitespace-nowrap cursor-pointer"
+                            data-tab="audience">Audience</button>
+                    </nav>
+                </div>
+
+                <!-- ==================== TAB: OVERVIEW ==================== -->
+                <div id="panel-overview" class="tab-panel active">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                        <!-- Brand Overview (wide) -->
+                        <div class="lg:col-span-2 bg-white rounded-xl p-5 border border-zinc-200/80 shadow-soft">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">Brand Overview
+                            </h3>
+                            <p id="res-business-overview" class="text-sm text-zinc-700 leading-relaxed mb-4">Loading...
+                            </p>
+                            <div>
+                                <span
+                                    class="text-[11px] font-semibold uppercase tracking-wider text-zinc-400 block mb-2">Products
+                                    & Services</span>
+                                <div id="res-products-tags" class="flex flex-wrap gap-1.5"></div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft">
+                                <span
+                                    class="text-[11px] font-semibold uppercase tracking-wider text-zinc-400 block mb-3">Quick
+                                    Statistics</span>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs text-zinc-500">Competitors</span>
+                                        <span id="stat-competitors" class="text-sm font-bold text-tf-text">0</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs text-zinc-500">Search Queries</span>
+                                        <span id="stat-queries" class="text-sm font-bold text-tf-text">5</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs text-zinc-500">Services</span>
+                                        <span id="stat-services" class="text-sm font-bold text-tf-text">0</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-xs text-zinc-500">Keywords</span>
+                                        <span id="stat-keywords" class="text-sm font-bold text-tf-text">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft">
+                                <span
+                                    class="text-[11px] font-semibold uppercase tracking-wider text-zinc-400 block mb-2">Competitive
+                                    Advantages</span>
+                                <ul id="overview-advantages" class="space-y-1.5 text-xs text-zinc-600"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== TAB: COMPETITORS ==================== -->
+                <div id="panel-competitors" class="tab-panel">
+                    <div class="mb-5 flex items-center justify-between">
+                        <h3 class="text-sm font-bold text-tf-text">Competitor vs Brand Analysis</h3>
+                        <span id="comp-count-badge"
+                            class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-zinc-100 text-zinc-600">0
+                            competitors</span>
+                    </div>
+                    <div id="competitors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6"></div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+                        <div class="bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft">
+                            <h4 class="text-xs font-bold text-tf-magenta uppercase tracking-wider mb-2.5">Brand
+                                Competitive Advantages</h4>
+                            <ul id="advantages-list" class="space-y-1.5 text-xs text-zinc-600"></ul>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft">
+                            <h4 class="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2.5">Positioning
+                                Opportunities</h4>
+                            <ul id="positioning-list" class="space-y-1.5 text-xs text-zinc-600"></ul>
+                        </div>
+                    </div>
+
+                    <p id="competitor-verification-note"
+                        class="text-[11px] text-zinc-400 bg-zinc-50 rounded-lg p-3 border border-zinc-100"></p>
+                </div>
+
+                <!-- ==================== TAB: SEARCH QUERIES ==================== -->
+                <div id="panel-queries" class="tab-panel">
+                    <div class="mb-5 flex items-center justify-between">
+                        <h3 class="text-sm font-bold text-tf-text">Top 5 Target Search Queries</h3>
+                        <div class="flex gap-1.5">
+                            <span
+                                class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-600 border border-blue-100">Google</span>
+                            <span
+                                class="px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-50 text-indigo-600 border border-indigo-100">Facebook</span>
+                            <span
+                                class="px-2 py-0.5 rounded text-[10px] font-semibold bg-fuchsia-50 text-fuchsia-600 border border-fuchsia-100">Instagram</span>
+                            <span
+                                class="px-2 py-0.5 rounded text-[10px] font-semibold bg-sky-50 text-sky-600 border border-sky-100">LinkedIn</span>
+                            <span
+                                class="px-2 py-0.5 rounded text-[10px] font-semibold bg-zinc-100 text-zinc-700 border border-zinc-200">X</span>
+                        </div>
+                    </div>
+
+                    <!-- Queries as a compact table -->
+                    <div class="bg-white rounded-xl border border-zinc-200/80 shadow-soft overflow-hidden mb-5">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr
+                                    class="border-b border-zinc-100 text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
+                                    <th class="px-4 py-2.5 w-8">#</th>
+                                    <th class="px-4 py-2.5">Query</th>
+                                    <th class="px-4 py-2.5 hidden md:table-cell">Platforms</th>
+                                    <th class="px-4 py-2.5 hidden lg:table-cell">Intent</th>
+                                    <th class="px-4 py-2.5 hidden lg:table-cell">Target Audience</th>
+                                    <th class="px-4 py-2.5 w-16"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="queries-tbody"></tbody>
+                        </table>
+                    </div>
+
+                    <p id="queries-disclaimer"
+                        class="text-[11px] text-zinc-400 bg-zinc-50 rounded-lg p-3 border border-zinc-100"></p>
+                </div>
+
+                <!-- ==================== TAB: SEO ==================== -->
+                <div id="panel-seo" class="tab-panel">
+                    <h3 class="text-sm font-bold text-tf-text mb-5">SEO Improvements & Keyword Strategy</h3>
+
+                    <!-- Keywords -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft">
+                            <span
+                                class="text-[11px] font-bold uppercase tracking-wider text-tf-magenta block mb-2">Primary
+                                Keywords</span>
+                            <div id="keywords-primary" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft">
+                            <span
+                                class="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block mb-2">Secondary
+                                Keywords</span>
+                            <div id="keywords-secondary" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft">
+                            <span
+                                class="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block mb-2">Long-Tail
+                                Keywords</span>
+                            <div id="keywords-longtail" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+                    </div>
+
+                    <!-- Meta Recommendations -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <div class="bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-400">Recommended
+                                    Title Tag</span>
+                                <span id="title-char-badge"
+                                    class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-500 font-mono">0/60</span>
+                            </div>
+                            <p id="recommended-seo-title" class="text-sm font-semibold text-tf-text mb-2"></p>
+                            <button type="button"
+                                class="copy-snippet-btn text-[11px] font-semibold text-tf-magenta hover:text-tf-magentaHover cursor-pointer"
+                                data-target="recommended-seo-title">Copy →</button>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-400">Recommended
+                                    Meta Description</span>
+                                <span id="meta-char-badge"
+                                    class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-500 font-mono">0/160</span>
+                            </div>
+                            <p id="recommended-seo-desc" class="text-sm text-zinc-600 leading-relaxed mb-2"></p>
+                            <button type="button"
+                                class="copy-snippet-btn text-[11px] font-semibold text-tf-magenta hover:text-tf-magentaHover cursor-pointer"
+                                data-target="recommended-seo-desc">Copy →</button>
+                        </div>
+                    </div>
+
+                    <!-- Content Recommendations -->
+                    <div class="mb-6">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">Content & Landing Page
+                            Ideas</h4>
+                        <div id="content-recommendations-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                    </div>
+
+                    <!-- FAQs -->
+                    <div class="mb-5">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">Recommended FAQs</h4>
+                        <div id="faqs-accordion" class="space-y-2"></div>
+                    </div>
+
+                    <div class="bg-zinc-50 rounded-lg p-3 border border-zinc-100">
+                        <span class="text-[11px] font-bold text-zinc-400 block mb-1">Strategic Rationale</span>
+                        <p id="seo-rationale-text" class="text-xs text-zinc-500 leading-relaxed"></p>
+                    </div>
+                </div>
+
+                <!-- ==================== TAB: SERVICES ==================== -->
+                <div id="panel-services" class="tab-panel">
+                    <div class="mb-5 flex items-center justify-between">
+                        <h3 class="text-sm font-bold text-tf-text">Top 5 Identified Services</h3>
+                        <span id="res-services-count"
+                            class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-zinc-100 text-zinc-600">0
+                            services</span>
+                    </div>
+                    <div id="services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5"></div>
+                    <p id="services-extraction-note"
+                        class="text-[11px] text-zinc-400 bg-zinc-50 rounded-lg p-3 border border-zinc-100"></p>
+                </div>
+
+                <!-- ==================== TAB: AUDIENCE ==================== -->
+                <div id="panel-audience" class="tab-panel">
+                    <h3 class="text-sm font-bold text-tf-text mb-5">Target Audience & Personas</h3>
+
+                    <!-- Primary Audience -->
+                    <div class="bg-white rounded-xl p-5 border border-zinc-200/80 shadow-soft mb-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span
+                                class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-tf-pinkLight text-tf-deepMagenta border border-pink-200/50">Primary
+                                Audience</span>
+                            <span id="primary-geo-focus" class="text-[11px] text-zinc-400"></span>
+                        </div>
+                        <h4 id="primary-segment-name" class="text-sm font-bold text-tf-text mb-1.5"></h4>
+                        <p id="primary-customer-profile" class="text-xs text-zinc-600 leading-relaxed mb-3"></p>
+                        <ul id="primary-pain-points"
+                            class="grid grid-cols-1 md:grid-cols-2 gap-1.5 text-xs text-zinc-600"></ul>
+                    </div>
+
+                    <!-- Secondary -->
+                    <div class="mb-5">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">Secondary Segments
+                        </h4>
+                        <div id="secondary-audiences-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                    </div>
+
+                    <!-- Industries & Business Types -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+                        <div class="bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft">
+                            <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block mb-2">Target
+                                Industries</span>
+                            <div id="target-industries-list" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft">
+                            <span
+                                class="text-[11px] font-bold uppercase tracking-wider text-zinc-400 block mb-2">Business
+                                Types</span>
+                            <div id="target-business-types-list" class="flex flex-wrap gap-1.5"></div>
+                        </div>
+                    </div>
+
+                    <!-- Marketing Recommendations -->
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3">Marketing
+                            Recommendations</h4>
+                        <div id="marketing-recommendations-list" class="space-y-2"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Toast -->
+    <div id="toast"
+        class="fixed bottom-4 right-4 z-50 transform translate-y-10 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 text-white text-xs font-medium shadow-lg">
+        <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+        </svg>
+        <span id="toast-message">Copied!</span>
+    </div>
+
+    <!-- Footer (only visible on landing) -->
+    <footer id="landing-footer" class="border-t border-zinc-100 bg-white py-5">
+        <div
+            class="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-zinc-400">
+            <span><span class="font-semibold text-zinc-500">Link Analysis</span> — Website Intelligence Platform</span>
+            <div class="flex items-center gap-4">
+                <a href="/docs" target="_blank" rel="noopener" class="hover:text-tf-magenta transition-colors">API
+                    Docs</a>
+                <a href="/health" target="_blank" rel="noopener"
+                    class="hover:text-tf-magenta transition-colors">Health</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================================================================ -->
+    <!-- JAVASCRIPT -->
+    <!-- ================================================================ -->
+    <script>
+            (function () {
+                'use strict';
+
+                let analysisData = null;
+                let loadingTimer = null;
+                let loadingStart = null;
+
+                // DOM refs
+                const $ = id => document.getElementById(id);
+                const landing = $('landing');
+                const landingFooter = $('landing-footer');
+                const loadingSec = $('loading-state');
+                const errorSec = $('error-state');
+                const resultsSec = $('results-section');
+                const form = $('analysis-form');
+                const urlInput = $('target-url');
+                const clearBtn = $('clear-btn');
+                const submitBtn = $('submit-btn');
+                const btnText = $('btn-text');
+                const btnIcon = $('btn-icon');
+                const btnSpinner = $('btn-spinner');
+                const toast = $('toast');
+                const toastMsg = $('toast-message');
+                const navDash = $('nav-dashboard');
+
+                // ---- Sample chips ----
+                document.querySelectorAll('.sample-chip').forEach(c => {
+                    c.addEventListener('click', () => { urlInput.value = c.dataset.url; clearBtn.classList.remove('hidden'); urlInput.focus(); });
+                });
+
+                // ---- Input clear ----
+                urlInput.addEventListener('input', () => { clearBtn.classList.toggle('hidden', !urlInput.value.trim()); });
+                clearBtn.addEventListener('click', () => { urlInput.value = ''; clearBtn.classList.add('hidden'); urlInput.focus(); });
+
+                // ---- Form submit ----
+                form.addEventListener('submit', async e => {
+                    e.preventDefault();
+                    const url = urlInput.value.trim();
+                    if (!url) return;
+                    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                        return showError('Invalid URL', 'Enter a full URL starting with http:// or https://', 'INVALID_SCHEME');
+                    }
+                    await runAnalysis(url);
+                });
+
+                // ---- Resets ----
+                $('error-reset-btn').addEventListener('click', goHome);
+                $('reset-analysis-btn').addEventListener('click', goHome);
+
+                function goHome() {
+                    hideAll();
+                    landing.classList.remove('hidden');
+                    landingFooter.classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    urlInput.focus();
+                }
+
+                function hideAll() {
+                    landing.classList.add('hidden');
+                    landingFooter.classList.add('hidden');
+                    loadingSec.classList.add('hidden');
+                    errorSec.classList.add('hidden');
+                    resultsSec.classList.add('hidden');
+                }
+
+                // ---- Tabs ----
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                        btn.classList.add('active');
+                        $('panel-' + btn.dataset.tab).classList.add('active');
+                    });
+                });
+
+                // ---- Copy JSON / Export ----
+                $('copy-json-btn').addEventListener('click', () => {
+                    if (!analysisData) return;
+                    navigator.clipboard.writeText(JSON.stringify(analysisData, null, 2)).then(() => showToast('JSON copied to clipboard'));
+                });
+
+                $('export-json-btn').addEventListener('click', () => {
+                    if (!analysisData) return;
+                    const name = (analysisData.brand?.brand_name || 'website').toLowerCase().replace(/[^a-z0-9]/g, '-');
+                    const blob = new Blob([JSON.stringify(analysisData, null, 2)], { type: 'application/json' });
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = `link-analysis-${name}.json`;
+                    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                    URL.revokeObjectURL(a.href);
+                    showToast('JSON exported');
+                });
+
+                // ---- Copy snippet delegation ----
+                document.addEventListener('click', e => {
+                    const btn = e.target.closest('.copy-snippet-btn');
+                    if (!btn) return;
+                    const el = $(btn.dataset.target);
+                    if (el) {
+                        navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+                            const orig = btn.textContent;
+                            btn.textContent = 'Copied ✓';
+                            showToast('Copied to clipboard');
+                            setTimeout(() => btn.textContent = orig, 2000);
+                        });
+                    }
+                });
+
+                // ---- Copy query delegation ----
+                document.addEventListener('click', e => {
+                    const btn = e.target.closest('.copy-query-btn');
+                    if (!btn) return;
+                    const q = btn.dataset.query;
+                    navigator.clipboard.writeText(q).then(() => {
+                        btn.textContent = '✓';
+                        showToast('Query copied');
+                        setTimeout(() => btn.textContent = 'Copy', 2000);
+                    });
+                });
+
+                // ---- Toast ----
+                function showToast(msg) {
+                    toastMsg.textContent = msg;
+                    toast.classList.remove('translate-y-10', 'opacity-0', 'pointer-events-none');
+                    setTimeout(() => toast.classList.add('translate-y-10', 'opacity-0', 'pointer-events-none'), 2500);
+                }
+
+                // ---- Main analysis flow ----
+                async function runAnalysis(url) {
+                    hideAll();
+                    setLoading(true);
+                    showLoadingUI();
+
+                    try {
+                        const resp = await fetch('/link-analysis', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                            body: JSON.stringify({ url })
+                        });
+                        const data = await resp.json();
+
+                        if (!resp.ok || data.status === 'error' || !data.success) {
+                            hideLoadingUI();
+                            return handleApiError(resp.status, data);
+                        }
+
+                        analysisData = data;
+                        hideLoadingUI();
+                        renderResults(data);
+                        resultsSec.classList.remove('hidden');
+                        navDash.classList.remove('hidden');
+                        resultsSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                    } catch (err) {
+                        hideLoadingUI();
+                        showError('Network Error', 'Could not connect to the API server.', 'NETWORK_ERROR', err.message);
+                    } finally {
+                        setLoading(false);
+                        stopTimer();
+                    }
+                }
+
+                function setLoading(on) {
+                    submitBtn.disabled = on;
+                    btnText.textContent = on ? 'Analyzing...' : 'Analyze Website';
+                    btnIcon.classList.toggle('hidden', on);
+                    btnSpinner.classList.toggle('hidden', !on);
+                }
+
+                // ---- Loading UI ----
+                function showLoadingUI() {
+                    loadingSec.classList.remove('hidden');
+                    $('progress-bar-fill').style.width = '12%';
+                    loadingStart = Date.now();
+                    $('elapsed-timer').textContent = '0.0s';
+                    let stage = 1;
+                    loadingTimer = setInterval(() => {
+                        const s = ((Date.now() - loadingStart) / 1000).toFixed(1);
+                        $('elapsed-timer').textContent = s + 's';
+                        if (s > 1.2 && stage === 1) { stage = 2; setStep(2, 'Extracting & Cleaning DOM', 'Removing scripts, boilerplate, computing word count...', 40); }
+                        else if (s > 3 && stage === 2) { stage = 3; setStep(3, 'Gemini Flash Analysis', 'Running 5-section business intelligence reasoning...', 72); }
+                        else if (s > 6 && stage === 3) { stage = 4; setStep(4, 'Building Report', 'Validating structured output and rendering...', 92); }
+                    }, 100);
+                }
+
+                function setStep(n, title, desc, pct) {
+                    $('loading-step-title').textContent = title;
+                    $('loading-step-desc').textContent = desc;
+                    $('progress-bar-fill').style.width = pct + '%';
+                    for (let i = 1; i <= 4; i++) {
+                        const el = $('step-' + i), dot = el.querySelector('.step-dot');
+                        if (i < n) { el.className = 'flex items-center gap-2 p-2 rounded-lg bg-emerald-50 text-emerald-700 font-medium'; dot.className = 'step-dot w-1.5 h-1.5 rounded-full bg-emerald-500'; }
+                        else if (i === n) { el.className = 'flex items-center gap-2 p-2 rounded-lg bg-tf-pinkLight text-tf-deepMagenta font-medium'; dot.className = 'step-dot w-1.5 h-1.5 rounded-full bg-tf-magenta animate-pulse'; }
+                        else { el.className = 'flex items-center gap-2 p-2 rounded-lg bg-zinc-50 text-zinc-500'; dot.className = 'step-dot w-1.5 h-1.5 rounded-full bg-zinc-300'; }
+                    }
+                }
+
+                function hideLoadingUI() {
+                    $('progress-bar-fill').style.width = '100%';
+                    setTimeout(() => loadingSec.classList.add('hidden'), 200);
+                }
+
+                function stopTimer() { if (loadingTimer) { clearInterval(loadingTimer); loadingTimer = null; } }
+
+                // ---- Error ----
+                function handleApiError(status, d) {
+                    const code = d.error_code || 'HTTP_' + status;
+                    const titles = {
+                        SSRF_SECURITY_BLOCKED: 'Blocked by Security Policy',
+                        INVALID_URL: 'Invalid URL',
+                        PAYLOAD_TOO_LARGE: 'Website Too Large',
+                        UNSUPPORTED_CONTENT_TYPE: 'Non-HTML Content',
+                        CONNECTION_TIMEOUT: 'Request Timed Out',
+                        GEMINI_TIMEOUT: 'Request Timed Out',
+                        GEMINI_RATE_LIMIT: 'Gemini Quota Exceeded',
+                        GEMINI_CONFIG_ERROR: 'API Key Required',
+                    };
+                    showError(titles[code] || 'Analysis Failed', d.message || 'An error occurred.', code, d.details);
+                }
+
+                function showError(title, msg, code, details) {
+                    $('error-title').textContent = title;
+                    $('error-message').textContent = msg;
+                    $('error-badge').textContent = code || 'ERROR';
+                    if (details) {
+                        $('error-details-content').textContent = typeof details === 'string' ? details : JSON.stringify(details, null, 2);
+                        $('error-details-container').classList.remove('hidden');
+                    } else {
+                        $('error-details-container').classList.add('hidden');
+                    }
+                    errorSec.classList.remove('hidden');
+                    errorSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+
+                // ---- Helpers ----
+                function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+                function chip(text, style) {
+                    style = style || 'bg-zinc-50 text-zinc-600 border-zinc-200';
+                    return `<span class="px-2 py-0.5 rounded text-[11px] font-medium border ${style}">${esc(text)}</span>`;
+                }
+
+                function bulletItem(text, dotColor) {
+                    dotColor = dotColor || 'bg-zinc-400';
+                    return `<li class="flex items-start gap-2 leading-relaxed"><span class="w-1 h-1 rounded-full ${dotColor} mt-1.5 flex-shrink-0"></span><span>${esc(text)}</span></li>`;
+                }
+
+                // ================================================================
+                // RENDER RESULTS
+                // ================================================================
+                function renderResults(data) {
+                    const w = data.website || {};
+                    const b = data.brand || {};
+                    const a = data.analysis || {};
+
+                    // --- Header ---
+                    $('res-brand-title').textContent = b.brand_name || w.title || 'Brand';
+                    $('res-target-url').href = w.url || '#';
+                    $('res-url-text').textContent = w.url || '';
+                    $('res-word-count').textContent = (w.word_count || 0).toLocaleString() + ' words';
+                    $('res-html-size').textContent = Math.round((w.raw_html_size_bytes || 0) / 1024) + ' KB';
+                    $('res-category-badge').textContent = b.category || 'General';
+
+                    // --- Overview ---
+                    $('res-business-overview').textContent = b.business_overview || 'No overview.';
+                    const tags = $('res-products-tags');
+                    tags.innerHTML = (b.products_and_services || []).slice(0, 8).map(p => chip(p)).join('');
+
+                    const comp = a.competitor_analysis || {};
+                    const sq = a.target_search_queries || {};
+                    const seo = a.seo_improvements || {};
+                    const sv = a.top_services || {};
+                    const aud = a.target_audience || {};
+                    const kw = seo.keywords || {};
+
+                    const totalKw = (kw.primary_keywords?.length || 0) + (kw.secondary_keywords?.length || 0) + (kw.long_tail_keywords?.length || 0);
+                    $('stat-competitors').textContent = (comp.competitors || []).length;
+                    $('stat-queries').textContent = (sq.queries || []).length;
+                    $('stat-services').textContent = sv.total_identified || (sv.services || []).length;
+                    $('stat-keywords').textContent = totalKw;
+
+                    $('overview-advantages').innerHTML = (comp.competitive_advantages || []).slice(0, 4).map(a => bulletItem(a, 'bg-tf-magenta')).join('');
+
+                    // --- Competitors ---
+                    const competitors = comp.competitors || [];
+                    $('comp-count-badge').textContent = competitors.length + ' competitors';
+                    const cg = $('competitors-grid');
+                    cg.innerHTML = '';
+                    competitors.forEach(c => {
+                        const badge = c.is_inferred
+                            ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-semibold bg-zinc-100 text-zinc-500 border border-zinc-200">AI-Inferred</span>'
+                            : '<span class="px-1.5 py-0.5 rounded text-[9px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">Verified</span>';
+
+                        const strengths = (c.strengths || []).map(s =>
+                            `<li class="flex items-start gap-1.5"><svg class="w-3 h-3 text-emerald-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg><span>${esc(s)}</span></li>`
+                        ).join('');
+                        const weaknesses = (c.weaknesses || []).map(w =>
+                            `<li class="flex items-start gap-1.5"><svg class="w-3 h-3 text-amber-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4"/></svg><span>${esc(w)}</span></li>`
+                        ).join('');
+
+                        const card = document.createElement('div');
+                        card.className = 'bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft';
+                        card.innerHTML = `
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <div>
+                            <h5 class="text-sm font-bold text-tf-text">${esc(c.name)}</h5>
+                            <span class="text-[10px] text-zinc-400">${esc(c.category_or_type)}</span>
+                        </div>
+                        ${badge}
+                    </div>
+                    <div class="space-y-2.5 text-[11px]">
+                        <div>
+                            <span class="text-[10px] font-bold uppercase text-emerald-600 block mb-1">Strengths</span>
+                            <ul class="space-y-1 text-zinc-600">${strengths || '<li class="text-zinc-400">—</li>'}</ul>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold uppercase text-amber-600 block mb-1">Weaknesses</span>
+                            <ul class="space-y-1 text-zinc-600">${weaknesses || '<li class="text-zinc-400">—</li>'}</ul>
+                        </div>
+                    </div>`;
+                        cg.appendChild(card);
+                    });
+
+                    $('advantages-list').innerHTML = (comp.competitive_advantages || []).map(a => bulletItem(a, 'bg-tf-magenta')).join('');
+                    $('positioning-list').innerHTML = (comp.positioning_opportunities || []).map(p => bulletItem(p, 'bg-zinc-400')).join('');
+                    $('competitor-verification-note').textContent = comp.verification_note || '';
+
+                    // --- Queries ---
+                    const queries = sq.queries || [];
+                    const tbody = $('queries-tbody');
+                    tbody.innerHTML = '';
+                    queries.forEach((q, i) => {
+                        const platColors = { Google: 'bg-blue-50 text-blue-600 border-blue-100', Facebook: 'bg-indigo-50 text-indigo-600 border-indigo-100', Instagram: 'bg-fuchsia-50 text-fuchsia-600 border-fuchsia-100', LinkedIn: 'bg-sky-50 text-sky-600 border-sky-100', X: 'bg-zinc-100 text-zinc-700 border-zinc-200' };
+                        const platPills = (q.platforms || []).map(p => `<span class="px-1.5 py-0.5 rounded text-[9px] font-semibold border ${platColors[p] || 'bg-zinc-100 text-zinc-600 border-zinc-200'}">${esc(p)}</span>`).join(' ');
+                        const intentColors = { Informational: 'text-blue-600', Commercial: 'text-emerald-600', Transactional: 'text-purple-600', Navigational: 'text-amber-600' };
+
+                        const tr = document.createElement('tr');
+                        tr.className = 'border-b border-zinc-50 hover:bg-zinc-50/50 transition-colors text-xs';
+                        tr.innerHTML = `
+                    <td class="px-4 py-3 font-mono text-zinc-400 font-semibold">${i + 1}</td>
+                    <td class="px-4 py-3">
+                        <span class="font-semibold text-tf-text">${esc(q.query)}</span>
+                        <span class="block text-[10px] text-zinc-400 mt-0.5 md:hidden">${platPills}</span>
+                    </td>
+                    <td class="px-4 py-3 hidden md:table-cell"><div class="flex flex-wrap gap-1">${platPills}</div></td>
+                    <td class="px-4 py-3 hidden lg:table-cell font-medium ${intentColors[q.search_intent] || 'text-zinc-500'}">${esc(q.search_intent)}</td>
+                    <td class="px-4 py-3 hidden lg:table-cell text-zinc-500">${esc(q.target_audience)}</td>
+                    <td class="px-4 py-3"><button class="copy-query-btn text-[11px] font-semibold text-tf-magenta hover:text-tf-magentaHover cursor-pointer" data-query="${esc(q.query)}">Copy</button></td>`;
+                        tbody.appendChild(tr);
+                    });
+                    $('queries-disclaimer').textContent = sq.volume_disclaimer || '';
+
+                    // --- SEO ---
+                    $('keywords-primary').innerHTML = (kw.primary_keywords || []).map(k => chip(k, 'bg-tf-pinkLight text-tf-deepMagenta border-pink-200/60')).join('');
+                    $('keywords-secondary').innerHTML = (kw.secondary_keywords || []).map(k => chip(k)).join('');
+                    $('keywords-longtail').innerHTML = (kw.long_tail_keywords || []).map(k => chip(k)).join('');
+
+                    const sTitle = seo.recommended_seo_title || '';
+                    const sDesc = seo.recommended_meta_description || '';
+                    $('recommended-seo-title').textContent = sTitle;
+                    $('title-char-badge').textContent = sTitle.length + '/60';
+                    $('recommended-seo-desc').textContent = sDesc;
+                    $('meta-char-badge').textContent = sDesc.length + '/160';
+
+                    const crGrid = $('content-recommendations-grid');
+                    crGrid.innerHTML = '';
+                    (seo.content_recommendations || []).forEach(r => {
+                        const d = document.createElement('div');
+                        d.className = 'bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft';
+                        d.innerHTML = `
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-tf-pinkLight text-tf-deepMagenta border border-pink-200/50">${esc(r.content_type)}</span>
+                        <span class="text-[10px] text-zinc-400 font-mono truncate">${esc(r.target_keyword)}</span>
+                    </div>
+                    <h5 class="text-xs font-bold text-tf-text mb-1">${esc(r.title)}</h5>
+                    <p class="text-[11px] text-zinc-500 leading-relaxed">${esc(r.summary_or_outline)}</p>`;
+                        crGrid.appendChild(d);
+                    });
+
+                    const faqC = $('faqs-accordion');
+                    faqC.innerHTML = '';
+                    (seo.recommended_faqs || []).forEach(f => {
+                        const det = document.createElement('details');
+                        det.className = 'bg-white rounded-lg border border-zinc-200/80 shadow-soft';
+                        det.innerHTML = `
+                    <summary class="px-4 py-2.5 text-xs font-semibold text-tf-text cursor-pointer list-none flex items-center justify-between">
+                        <span>${esc(f.question)}</span>
+                        <svg class="w-3.5 h-3.5 text-zinc-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </summary>
+                    <p class="px-4 pb-3 text-xs text-zinc-500 leading-relaxed border-t border-zinc-100 pt-2">${esc(f.recommended_answer)}</p>`;
+                        faqC.appendChild(det);
+                    });
+
+                    $('seo-rationale-text').textContent = seo.rationale || '';
+
+                    // --- Services ---
+                    const services = sv.services || [];
+                    $('res-services-count').textContent = (sv.total_identified || services.length) + ' services';
+                    const sg = $('services-grid');
+                    sg.innerHTML = '';
+                    services.forEach(s => {
+                        const badge = s.is_inferred
+                            ? '<span class="px-1.5 py-0.5 rounded text-[9px] font-semibold bg-amber-50 text-amber-700 border border-amber-100">Inferred</span>'
+                            : '<span class="px-1.5 py-0.5 rounded text-[9px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">Extracted</span>';
+                        const card = document.createElement('div');
+                        card.className = 'bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft flex flex-col';
+                        card.innerHTML = `
+                    <div class="flex items-start justify-between gap-2 mb-2">
+                        <h5 class="text-xs font-bold text-tf-text">${esc(s.service_name)}</h5>
+                        ${badge}
+                    </div>
+                    <p class="text-[11px] text-zinc-500 leading-relaxed mb-3 flex-1">${esc(s.description)}</p>
+                    <div class="space-y-1 text-[11px] mb-3">
+                        <div><span class="text-zinc-400 font-medium">Industry:</span> <span class="text-zinc-600">${esc(s.target_industry)}</span></div>
+                        <div><span class="text-zinc-400 font-medium">Customer:</span> <span class="text-zinc-600">${esc(s.target_customer)}</span></div>
+                    </div>
+                    <div class="mt-auto p-2.5 rounded-lg bg-tf-pinkLight/50 border border-pink-100/60">
+                        <span class="text-[10px] font-bold text-tf-deepMagenta block mb-0.5">Key Benefit</span>
+                        <span class="text-[11px] text-zinc-700">${esc(s.main_benefit)}</span>
+                    </div>`;
+                        sg.appendChild(card);
+                    });
+                    $('services-extraction-note').textContent = sv.extraction_note || '';
+
+                    // --- Audience ---
+                    const pri = aud.primary_audience || {};
+                    $('primary-segment-name').textContent = pri.segment_name || '';
+                    $('primary-customer-profile').textContent = pri.customer_profile || '';
+                    $('primary-geo-focus').textContent = aud.geographic_focus ? 'Focus: ' + aud.geographic_focus : '';
+                    $('primary-pain-points').innerHTML = (pri.core_needs_and_pain_points || []).map(p =>
+                        `<li class="flex items-start gap-1.5"><svg class="w-3 h-3 text-tf-magenta mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>${esc(p)}</span></li>`
+                    ).join('');
+
+                    const sag = $('secondary-audiences-grid');
+                    sag.innerHTML = '';
+                    (aud.secondary_audiences || []).forEach(s => {
+                        const pains = (s.core_needs_and_pain_points || []).map(p => bulletItem(p, 'bg-zinc-400')).join('');
+                        const card = document.createElement('div');
+                        card.className = 'bg-white rounded-xl p-4 border border-zinc-200/80 shadow-soft';
+                        card.innerHTML = `
+                    <div class="flex items-center justify-between mb-1.5">
+                        <h5 class="text-xs font-bold text-tf-text">${esc(s.segment_name)}</h5>
+                        <span class="px-1.5 py-0.5 rounded text-[9px] font-semibold bg-zinc-100 text-zinc-500 border border-zinc-200">Secondary</span>
+                    </div>
+                    <p class="text-[11px] text-zinc-500 leading-relaxed mb-2">${esc(s.customer_profile)}</p>
+                    <ul class="space-y-1 text-[11px] text-zinc-600">${pains}</ul>`;
+                        sag.appendChild(card);
+                    });
+
+                    $('target-industries-list').innerHTML = (aud.target_industries || []).map(i => chip(i)).join('');
+                    $('target-business-types-list').innerHTML = (aud.target_business_types || []).map(b => chip(b)).join('');
+
+                    const ml = $('marketing-recommendations-list');
+                    ml.innerHTML = '';
+                    (aud.marketing_recommendations || []).forEach((r, i) => {
+                        const d = document.createElement('div');
+                        d.className = 'flex items-start gap-3 p-3 bg-white rounded-lg border border-zinc-200/80 shadow-soft';
+                        d.innerHTML = `
+                    <span class="w-5 h-5 rounded bg-tf-pinkLight text-tf-deepMagenta font-bold text-[10px] flex items-center justify-center flex-shrink-0 mt-0.5">${i + 1}</span>
+                    <p class="text-xs text-zinc-600 leading-relaxed">${esc(r)}</p>`;
+                        ml.appendChild(d);
+                    });
+
+                    // Reset to Overview tab
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                    document.querySelector('.tab-btn[data-tab="overview"]').classList.add('active');
+                    $('panel-overview').classList.add('active');
+                }
+            })();
+    </script>
+</body>
+
+</html>
